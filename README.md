@@ -1,1 +1,1 @@
-# blog_thinker
+# Blog Thinker
