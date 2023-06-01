@@ -1,0 +1,21 @@
+{
+  "name": "blog_thinker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "v16.x",
+    "npm": "9.6.6"
+  },
+  "scripts": {
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
+    "develop": "concurrently \"cd client && npm start\" \"cd server && npm run server\" ",
+    "start": "cd server && node server.js",
+    "server": "cd server server.js",
+    "build": "cd client && npm run build",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "client": "cd client && npm start"
+  },
+  "author": "",
+  "license": "ISC"
+}
