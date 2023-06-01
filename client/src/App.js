@@ -1,9 +1,13 @@
 import Navbar from './Components/Navbar'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import About from './Components/About'
+
+// import { Route, Routes } from 'react-router-dom'
+
 function App() {
   return (
    <>
  <Navbar/>
+ <About/>
    </>
   );
 }
