@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -15,7 +15,6 @@ import {
   PopoverContent,
   useColorModeValue,
   useColorMode,
-  useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import {
@@ -31,7 +30,7 @@ import {
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
+  //   FormErrorMessage,
   FormHelperText,
 } from '@chakra-ui/react';
 
@@ -42,7 +41,6 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-
 
 export default function WithSubnavigation() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -78,20 +76,20 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-        <Button
+          {/* Logo button */}
+          <Button
             as={'a'}
             fontSize={'sm'}
             fontWeight={400}
             variant={'link'}
             href={'/'}
           >
-           LOGO
+            LOGO
           </Button>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
-
         <Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
@@ -106,15 +104,15 @@ export default function WithSubnavigation() {
               <DrawerCloseButton />
               <DrawerHeader>Login</DrawerHeader>
               <DrawerBody>
-              <FormControl>
-  <FormLabel>Email address</FormLabel>
-  <Input type='email' />
-  <FormHelperText>We'll never share your email.</FormHelperText>
-</FormControl>
-<FormControl>
-  <FormLabel>Password</FormLabel>
-  <Input type='password' />
-</FormControl>
+                <FormControl>
+                  <FormLabel>Email address</FormLabel>
+                  <Input type="email" />
+                  <FormHelperText>We'll never share your email.</FormHelperText>
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Password</FormLabel>
+                  <Input type="password" />
+                </FormControl>
               </DrawerBody>
               <DrawerFooter>
                 <Button type="submit" form="my-form">
@@ -198,7 +196,8 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
-              <Link as={RouterLink}
+              <Link
+                as={RouterLink}
                 p={2}
                 to={navItem.href ?? '#'}
                 fontSize={'sm'}
@@ -238,7 +237,8 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
-    <Link as={RouterLink}
+    <Link
+      as={RouterLink}
       to={href}
       role={'group'}
       display={'block'}
