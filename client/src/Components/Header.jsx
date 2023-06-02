@@ -52,7 +52,7 @@ export default function CallToActionWithIllustration() {
           This will be cool header for our application!!!
         </Text>
         <Stack spacing={6} direction={'row'}>
-          <Link
+          {/* <Link
             as={RouterLink}
             textColor={'black'}
             display={'flex'}
@@ -67,7 +67,7 @@ export default function CallToActionWithIllustration() {
             _hover={{ bg: 'orange.500' }}
           >
             Contact Us
-          </Link>
+          </Link> */}
    <Button
    textColor={'black'}
    fontSize={'14'}
