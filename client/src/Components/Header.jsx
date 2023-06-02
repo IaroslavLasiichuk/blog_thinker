@@ -1,12 +1,13 @@
-import React from 'react'
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import Auth from '../utils/auth';
+import { ADD_USER } from '../utils/mutations';
 import {
   Flex,
   Container,
   Heading,
   Stack,
   Text,
-  Link,
   Input,
   FormControl,
   FormLabel,
@@ -27,9 +28,34 @@ import {
 
 export default function CallToActionWithIllustration() {
     const { isOpen, onOpen, onClose } = useDisclosure()
-  
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
+
+    const [formState, setFormState] = useState({ email: '', password: '', username: ''});
+    const [addUser] = useMutation(ADD_USER);
+  
+    const handleFormSubmit = async (event) => {
+      event.preventDefault();
+      const mutationResponse = await addUser({
+        variables: {
+          email: formState.email,
+          password: formState.password,
+          username: formState.username,
+        },
+      });
+      const token = mutationResponse.data.addUser.token;
+      Auth.login(token);
+    };
+  
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+      setFormState({
+        ...formState,
+        [name]: value,
+      });
+    };
+
+
   return (
     <Container maxW={'5xl'}>
       <Stack
@@ -52,22 +78,12 @@ export default function CallToActionWithIllustration() {
           This will be cool header for our application!!!
         </Text>
         <Stack spacing={6} direction={'row'}>
-          {/* <Link
-            as={RouterLink}
-            textColor={'black'}
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            textAlign={'center'}
-            to={'/contact'}
-            rounded={'full'}
-            px={6}
-            colorScheme={'orange'}
-            bg={'orange.400'}
-            _hover={{ bg: 'orange.500' }}
-          >
-            Contact Us
-          </Link> */}
+       
+       
+
+
+
+
    <Button
    textColor={'black'}
    fontSize={'14'}
