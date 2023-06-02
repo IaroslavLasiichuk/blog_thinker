@@ -1,8 +1,8 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
-import React, { useState } from 'react';
+import Login from './Login';
+import Signup from './Signup';
 import Auth from '../utils/auth';
+
 import {
   Box,
   Flex,
@@ -12,7 +12,6 @@ import {
   Stack,
   Collapse,
   Icon,
-  Input,
   Link,
   Popover,
   PopoverTrigger,
@@ -21,22 +20,7 @@ import {
   useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
-import {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-} from '@chakra-ui/react';
-
-import {
-  FormControl,
-  FormLabel,
-  //   FormErrorMessage,
-  FormHelperText,
-} from '@chakra-ui/react';
+import { Drawer, DrawerOverlay } from '@chakra-ui/react';
 
 import {
   HamburgerIcon,
@@ -46,36 +30,11 @@ import {
 } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
-
-
 export default function WithSubnavigation() {
   const { colorMode, toggleColorMode } = useColorMode();
   const drawer = useDisclosure();
   const drawerLogin = useDisclosure();
   const { isOpen, onToggle } = useDisclosure();
-  const [formState, setFormState] = useState({ email: '', password: '', username: ''});
-  const [addUser] = useMutation(ADD_USER);
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    const mutationResponse = await addUser({
-      variables: {
-        email: formState.email,
-        password: formState.password,
-        username: formState.username,
-      },
-    });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
 
   return (
     <Box>
@@ -106,13 +65,8 @@ export default function WithSubnavigation() {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* Logo link */}
-          <Link
-              as={RouterLink}
-            fontSize={'lg'}
-            fontWeight={900}
-            to='/'
-          >
-            LOGO
+          <Link as={RouterLink} fontSize={'lg'} fontWeight={900} to="/">
+            TNK
           </Link>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
@@ -125,46 +79,24 @@ export default function WithSubnavigation() {
           spacing={6}
         >
           {/* Drawer for Login */}
-          <Button onClick={drawerLogin.onOpen}>Login</Button>
+          
           <Drawer isOpen={drawerLogin.isOpen} onClose={drawerLogin.onClose}>
             <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Login</DrawerHeader>
-              <DrawerBody>
-              <form onSubmit={handleFormSubmit} >
-              <Stack spacing={3}>
-             <Input 
-              name="email"
-              type="email"
-              id="email"
-              onChange={handleChange}
-              variant='outline' placeholder='Email' />
-             <Input name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-            variant='outline' placeholder='Password'/>
-             <Button
-             type="submit"
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
-            _hover={{
-              bg: 'pink.300',
-            }}
-          >
-            Submit
-          </Button>
-           </Stack>
-                </form>
-              </DrawerBody>
-            </DrawerContent>
+            <Login />
           </Drawer>
-
-          {/* Drawer for Sugn Up */}
-          <Button
+          {/* Drawer for Sign Up */}
+          {Auth.loggedIn() ? (
+                <>
+                 <Button
+                      onClick={Auth.logout}
+                        >
+                        Logout
+                      </Button>
+                </>
+              ) : (
+               <>
+                <Button onClick={drawerLogin.onOpen}>Login</Button>
+                 <Button
             onClick={drawer.onOpen}
             as={'a'}
             fontSize={'sm'}
@@ -177,98 +109,11 @@ export default function WithSubnavigation() {
           >
             Sign Up
           </Button>
+               </>
+              )}
           <Drawer isOpen={drawer.isOpen} onClose={drawer.onClose}>
             <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Create your account</DrawerHeader>
-              <DrawerBody>
-              <form onSubmit={handleFormSubmit}>
-             <Stack spacing={3}>
-             <Input
-              name="username"
-              type="username"
-              id="username"
-              onChange={handleChange} variant='outline' placeholder='Name' />
-             <Input 
-              name="email"
-              type="email"
-              id="email"
-              onChange={handleChange}
-              variant='outline' placeholder='Email' />
-             <Input name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-            variant='outline' placeholder='Password'/>
-             <Button
-             type="submit"
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
-            _hover={{
-              bg: 'pink.300',
-            }}
-          >
-            Submit
-          </Button>
-           </Stack>
-                </form> 
-              </DrawerBody> 
-             <DrawerFooter>
-                <Button
-                  fontSize={'sm'}
-                  fontWeight={600}
-                  color={'white'}
-                  bg={'pink.400'}
-                  _hover={{
-                    bg: 'pink.300',
-                  }}
-                  type="submit"
-                  form="my-form"
-                >
-                  Submit
-                </Button>
-             
-              </DrawerFooter>
-             
-               {/* <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="firstName">Name:</label>
-          <input
-            placeholder="Name"
-            name="username"
-            type="username"
-            id="username"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email:</label>
-          <input
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
-        </div>
-      </form> */}
-            </DrawerContent>
+            <Signup />
           </Drawer>
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
@@ -289,45 +134,51 @@ const DesktopNav = () => {
 
   return (
     <Stack direction={'row'} spacing={4}>
-      {NAV_ITEMS.map(navItem => (
-        <Box key={navItem.label}>
-          <Popover trigger={'hover'} placement={'bottom-start'}>
-            <PopoverTrigger>
-              <Link
-                as={RouterLink}
-                p={2}
-                to={navItem.href ?? '#'}
-                fontSize={'sm'}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: 'none',
-                  color: linkHoverColor,
-                }}
-              >
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
+      {NAV_ITEMS.map(navItem => {
+        if (!Auth.loggedIn()) {
+          return null;
+        }
 
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={'xl'}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={'xl'}
-                minW={'sm'}
-              >
-                <Stack>
-                  {navItem.children.map(child => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
-      ))}
+        return (
+          <Box key={navItem.label}>
+            <Popover trigger={'hover'} placement={'bottom-start'}>
+              <PopoverTrigger>
+                <Link
+                  as={RouterLink}
+                  p={2}
+                  to={navItem.href ?? '#'}
+                  fontSize={'sm'}
+                  fontWeight={500}
+                  color={linkColor}
+                  _hover={{
+                    textDecoration: 'none',
+                    color: linkHoverColor,
+                  }}
+                >
+                  {navItem.label}
+                </Link>
+              </PopoverTrigger>
+
+              {navItem.children && (
+                <PopoverContent
+                  border={0}
+                  boxShadow={'xl'}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={'xl'}
+                  minW={'sm'}
+                >
+                  <Stack>
+                    {navItem.children.map(child => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+            </Popover>
+          </Box>
+        );
+      })}
     </Stack>
   );
 };
@@ -460,7 +311,7 @@ const NAV_ITEMS: Array<NavItem> = [
       },
     ],
   },
- 
+
   {
     label: 'Contact',
     href: '/contact',
