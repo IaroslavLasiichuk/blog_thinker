@@ -358,7 +358,7 @@ const NAV_ITEMS: Array<NavItem> = [
       {
         label: 'View Posts',
         subLabel: 'View your posts',
-        href: '/profile',
+        href: '/posts',
       },
     ],
   },
