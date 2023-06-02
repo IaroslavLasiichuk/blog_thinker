@@ -1,44 +1,15 @@
 import React from 'react'
 import Navbar from './Navbar'
-import Footer from './Footer'
-import { Link as RouterLink } from 'react-router-dom';
 import {
   Flex,
   Container,
   Heading,
   Stack,
   Text,
-  Link,
-  Input,
-  Box,
-  InputGroup,
-  InputLeftAddon,
-  Textarea,
-  Select,
-  InputRightAddon,
-  FormControl,
-  FormLabel,
-  Button,
-  Icon,
-  IconProps,
-  useDisclosure,
 } from '@chakra-ui/react';
 
-import {
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-  } from '@chakra-ui/react'
-
 export default function Profile() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-  
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
+
   return (
     <>
      <Navbar/>

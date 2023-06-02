@@ -2,13 +2,11 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import {
     Button,
-    Checkbox,
     Flex,
     FormControl,
     FormLabel,
     Heading,
     Input,
-    Link,
     Stack,
     Image,
     Textarea

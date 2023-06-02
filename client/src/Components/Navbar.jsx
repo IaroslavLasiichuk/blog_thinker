@@ -1,4 +1,8 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { ADD_USER } from '../utils/mutations';
+import React, { useState } from 'react';
+import Auth from '../utils/auth';
 import {
   Box,
   Flex,
@@ -42,11 +46,36 @@ import {
 } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
+
+
 export default function WithSubnavigation() {
   const { colorMode, toggleColorMode } = useColorMode();
   const drawer = useDisclosure();
   const drawerLogin = useDisclosure();
   const { isOpen, onToggle } = useDisclosure();
+  const [formState, setFormState] = useState({ email: '', password: '', username: ''});
+  const [addUser] = useMutation(ADD_USER);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const mutationResponse = await addUser({
+      variables: {
+        email: formState.email,
+        password: formState.password,
+        username: formState.username,
+      },
+    });
+    const token = mutationResponse.data.addUser.token;
+    Auth.login(token);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
   return (
     <Box>
@@ -103,21 +132,34 @@ export default function WithSubnavigation() {
               <DrawerCloseButton />
               <DrawerHeader>Login</DrawerHeader>
               <DrawerBody>
-                <FormControl>
-                  <FormLabel>Email address</FormLabel>
-                  <Input type="email" />
-                  <FormHelperText>We'll never share your email.</FormHelperText>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Password</FormLabel>
-                  <Input type="password" />
-                </FormControl>
+              <form onSubmit={handleFormSubmit} >
+              <Stack spacing={3}>
+             <Input 
+              name="email"
+              type="email"
+              id="email"
+              onChange={handleChange}
+              variant='outline' placeholder='Email' />
+             <Input name="password"
+            type="password"
+            id="pwd"
+            onChange={handleChange}
+            variant='outline' placeholder='Password'/>
+             <Button
+             type="submit"
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'pink.400'}
+            _hover={{
+              bg: 'pink.300',
+            }}
+          >
+            Submit
+          </Button>
+           </Stack>
+                </form>
               </DrawerBody>
-              <DrawerFooter>
-                <Button type="submit" form="my-form">
-                  Submit
-                </Button>
-              </DrawerFooter>
             </DrawerContent>
           </Drawer>
 
@@ -141,21 +183,40 @@ export default function WithSubnavigation() {
               <DrawerCloseButton />
               <DrawerHeader>Create your account</DrawerHeader>
               <DrawerBody>
-                <FormControl>
-                  <FormLabel>Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Email address</FormLabel>
-                  <Input type="email" />
-                  <FormHelperText>We'll never share your email.</FormHelperText>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Password</FormLabel>
-                  <Input type="password" />
-                </FormControl>
-              </DrawerBody>
-              <DrawerFooter>
+              <form onSubmit={handleFormSubmit}>
+             <Stack spacing={3}>
+             <Input
+              name="username"
+              type="username"
+              id="username"
+              onChange={handleChange} variant='outline' placeholder='Name' />
+             <Input 
+              name="email"
+              type="email"
+              id="email"
+              onChange={handleChange}
+              variant='outline' placeholder='Email' />
+             <Input name="password"
+            type="password"
+            id="pwd"
+            onChange={handleChange}
+            variant='outline' placeholder='Password'/>
+             <Button
+             type="submit"
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'pink.400'}
+            _hover={{
+              bg: 'pink.300',
+            }}
+          >
+            Submit
+          </Button>
+           </Stack>
+                </form> 
+              </DrawerBody> 
+             <DrawerFooter>
                 <Button
                   fontSize={'sm'}
                   fontWeight={600}
@@ -169,7 +230,44 @@ export default function WithSubnavigation() {
                 >
                   Submit
                 </Button>
+             
               </DrawerFooter>
+             
+               {/* <h2>Signup</h2>
+      <form onSubmit={handleFormSubmit}>
+        <div className="flex-row space-between my-2">
+          <label htmlFor="firstName">Name:</label>
+          <input
+            placeholder="Name"
+            name="username"
+            type="username"
+            id="username"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row space-between my-2">
+          <label htmlFor="email">Email:</label>
+          <input
+            placeholder="youremail@test.com"
+            name="email"
+            type="email"
+            id="email"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row space-between my-2">
+          <label htmlFor="pwd">Password:</label>
+          <input
+            name="password"
+            type="password"
+            id="pwd"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row flex-end">
+          <button type="submit">Submit</button>
+        </div>
+      </form> */}
             </DrawerContent>
           </Drawer>
           <Button onClick={toggleColorMode}>
@@ -362,6 +460,7 @@ const NAV_ITEMS: Array<NavItem> = [
       },
     ],
   },
+ 
   {
     label: 'Contact',
     href: '/contact',
