@@ -10,7 +10,6 @@ import {
   import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
   import { ReactNode } from 'react';
   
-  
   const SocialButton = ({
     children,
     label,
@@ -42,7 +41,7 @@ import {
     );
   };
   
-  export default function SmallCentered() {
+  export default function Footer() {
     return (
       <Box
         bg={useColorModeValue('gray.50', 'gray.900')}

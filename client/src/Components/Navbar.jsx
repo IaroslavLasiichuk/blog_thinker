@@ -228,9 +228,13 @@ const MobileNav = () => {
       p={4}
       display={{ md: 'none' }}
     >
-      {NAV_ITEMS.map(navItem => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
+      {NAV_ITEMS.map(navItem => {
+        if (!Auth.loggedIn()) {
+          return null; // Skip rendering the MobileNavItem if it should only be shown when logged in and the user is not logged in
+        }
+
+        return <MobileNavItem key={navItem.label} {...navItem} />;
+      })}
     </Stack>
   );
 };
