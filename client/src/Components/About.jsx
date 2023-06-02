@@ -96,7 +96,7 @@ const TestimonialAvatar = ({
 export default function About() {
   return (
     <>
-  {/* <Navbar/> */}
+  <Navbar/>
         <Flex
         minH={'100vh'}
         align={'center'}
@@ -153,7 +153,7 @@ export default function About() {
           </Testimonial>
           <Testimonial>
             <TestimonialContent>
-              <TestimonialHeading>Mindblowing Service</TestimonialHeading>
+              <TestimonialHeading>Web Developer</TestimonialHeading>
               <TestimonialText>
               I'am currently in construction doing Fire Sprinkler Installing, needed a change so i enrolled to become a Full stack developer
               </TestimonialText>

@@ -79,7 +79,8 @@ import {
             spacing={4}
             justify={{ base: 'center', md: 'space-between' }}
             align={{ base: 'center', md: 'center' }}>
-            <Text>© 2023 Iaroslav Lasiichuk. All rights reserved</Text>
+            <Text>Made by Joseph S.Ortega, Sutton Charpentier,
+        Iaroslav Lasiichuk, Axel Irias © Inc.© 2023 All rights reserved</Text>
             <Stack direction={'row'} spacing={6}>
               <SocialButton label={'Twitter'} href={'#'}>
                 <FaTwitter />
