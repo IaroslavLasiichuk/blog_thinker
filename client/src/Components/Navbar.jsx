@@ -76,16 +76,15 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          {/* Logo button */}
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
-            href={'/'}
+          {/* Logo link */}
+          <Link
+              as={RouterLink}
+            fontSize={'lg'}
+            fontWeight={900}
+            to='/'
           >
             LOGO
-          </Button>
+          </Link>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -294,8 +293,8 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as={Link}
-        href={href ?? '#'}
+        as={RouterLink}
+        to={href ?? '#'}
         justify={'space-between'}
         align={'center'}
         _hover={{
