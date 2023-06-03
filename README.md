@@ -6,7 +6,7 @@
 
 ## Link
 Link to deployed application on HEROKU.
->https://.herokulink.com/
+>https://salty-eyrie-98942.herokuapp.com/
 
 ## Table of Contents
   

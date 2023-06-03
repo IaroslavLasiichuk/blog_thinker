@@ -1,20 +1,23 @@
 const express = require("express");
-// Import the ApolloServer class
-const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
-const { authMiddleware } = require('./utils/auth');
 require("dotenv").config();
+const { authMiddleware } = require('./utils/auth');
+
+// Import the ApolloServer class
 const { typeDefs, resolvers } = require("./schemas");
+const { ApolloServer } = require("apollo-server-express");
+
 const db = require("./config/connection");
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 4000;
 const app = express();
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
-  context: authMiddleware
+  context: authMiddleware,
+  persistedQueries: false
 });
 
 // if we're in production, serve client/build as static assets
@@ -39,9 +42,8 @@ const startApolloServer = async () => {
     app.listen(PORT, () => {
       console.log(`✅Server running on port http://localhost:${PORT}`);
       console.log(`💣Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
-
     });
   });
 };
-
+// Call the async function to start the server
 startApolloServer();

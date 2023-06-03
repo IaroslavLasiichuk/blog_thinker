@@ -23,8 +23,9 @@ import {
             direction={{ base: 'column', md: 'row' }}
             spacing={4}
             justify={{ base: 'center', md: 'center' }}
-            align={{ base: 'center', md: 'center' }}>
-            <Text >Made by Joseph S.Ortega, Sutton Charpentier,
+            align={{ base: 'center', md: 'center' }}
+            textAlign={'center'}>
+            <Text>Made by Joseph S.Ortega, Sutton Charpentier,
         Iaroslav Lasiichuk, Axel Irias © Inc.© 2023 All rights reserved</Text>
           </Container>
         </Box>
