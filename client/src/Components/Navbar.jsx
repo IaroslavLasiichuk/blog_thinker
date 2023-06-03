@@ -82,7 +82,6 @@ export default function WithSubnavigation() {
           spacing={6}
         >
           {/* Drawer for Login */}
-          
           <Drawer isOpen={drawerLogin.isOpen} onClose={drawerLogin.onClose}>
             <DrawerOverlay />
             <Login />

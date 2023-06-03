@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Auth from '../utils/auth';
 import { WarningTwoIcon } from '@chakra-ui/icons';
+import { useMutation } from '@apollo/client';
+import { ADD_THOUGHT } from '../utils/mutations';
+import { QUERY_THOUGHTS, QUERY_ME } from '../utils/queries';
 
 import {
   Flex,
@@ -30,6 +33,39 @@ import {
 
 export default function Profile() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [formState, setFormState] = useState({
+    thoughtText: '',
+    
+  });
+
+  // Set up our mutation with an option to handle errors
+  const [addThought, { error }] = useMutation(ADD_THOUGHT);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // On form submit, perform mutation and pass in form data object as arguments
+    // It is important that the object fields are match the defined parameters in `ADD_THOUGHT` mutation
+    try {
+      const { data } = addThought({
+        variables: { ...formState }
+       
+      });
+      // console.log(data);
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === 'thoughtText') {
+      setFormState({ ...formState, [name]: value });
+    }
+  };
   return (
     <>
     <Flex minHeight="100vh" flexDir="column">
@@ -66,23 +102,40 @@ export default function Profile() {
                 <DrawerHeader borderBottomWidth="1px">
                   Add new post
                 </DrawerHeader>
-                <DrawerBody>
-                  <Stack spacing="24px">
-                    <Box>
-                      <FormLabel htmlFor="username">Title</FormLabel>
-                      <Input id="title" placeholder="Please enter title" />
-                    </Box>
-                    <Box>
-                      <FormLabel htmlFor="desc">Description</FormLabel>
-                      <Textarea id="desc" />
-                    </Box>
-                  </Stack>
-                </DrawerBody>
+                <form onSubmit={handleFormSubmit}>
+            <Stack spacing={3}>
+              {/* <Input
+                name="title"
+                type="text"
+                value={formState.title}
+                id="title"
+                onChange={handleChange}
+                variant="outline"
+                placeholder="Title"
+              /> */}
+             <Textarea name="thoughtText"
+                type="text"
+                value={formState.thoughtText}
+                id="content"
+                onChange={handleChange}
+                variant="outline"
+                placeholder="Content" placeholder="Here is a sample placeholder" />
+
+              <Button
+                type="submit"
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'pink.400'}
+                _hover={{
+                  bg: 'pink.300',
+                }}
+              >
+                Submit
+              </Button>
+            </Stack>
+          </form>
                 <DrawerFooter borderTopWidth="1px">
-                  <Button variant="outline" mr={3} onClick={onClose}>
-                    Cancel
-                  </Button>
-                  <Button colorScheme="blue">Submit</Button>
                 </DrawerFooter>
               </DrawerContent>
             </Drawer>
