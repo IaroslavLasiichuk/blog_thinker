@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import Auth from '../utils/auth';
-import { ADD_USER } from '../utils/mutations';
+import React from 'react';
 import {
   Flex,
   Container,
@@ -24,120 +21,91 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 
 export default function CallToActionWithIllustration() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
-
-    const [formState, setFormState] = useState({ email: '', password: '', username: ''});
-    const [addUser] = useMutation(ADD_USER);
-  
-    const handleFormSubmit = async (event) => {
-      event.preventDefault();
-      const mutationResponse = await addUser({
-        variables: {
-          email: formState.email,
-          password: formState.password,
-          username: formState.username,
-        },
-      });
-      const token = mutationResponse.data.addUser.token;
-      Auth.login(token);
-    };
-  
-    const handleChange = (event) => {
-      const { name, value } = event.target;
-      setFormState({
-        ...formState,
-        [name]: value,
-      });
-    };
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
 
   return (
-    <Container maxW={'5xl'}>
-      <Stack
-        textAlign={'center'}
-        align={'center'}
-        spacing={{ base: 8, md: 10 }}
-        py={{ base: 20, md: 28 }}
-      >
-        <Heading
-          fontWeight={600}
-          fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
-          lineHeight={'110%'}
+    <Flex minHeight="100vh" flexDir="column">
+      <Container maxW={'5xl'} flex="1">
+        <Stack
+          textAlign={'center'}
+          align={'center'}
+          spacing={{ base: 8, md: 10 }}
+          py={{ base: 20, md: 28 }}
         >
-          Welcome to{' '}
-          <Text as={'span'} color={'orange.400'}>
-            Thinker
+          <Heading
+            fontWeight={600}
+            fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
+            lineHeight={'110%'}
+          >
+            Welcome to{' '}
+            <Text as={'span'} color={'orange.400'}>
+              Thinker
+            </Text>
+          </Heading>
+          <Text color={'gray.500'} maxW={'3xl'}>
+            This will be cool header for our application!!!
           </Text>
-        </Heading>
-        <Text color={'gray.500'} maxW={'3xl'}>
-          This will be cool header for our application!!!
-        </Text>
-        <Stack spacing={6} direction={'row'}>
-       
-       
-
-
-
-
-   <Button
-   textColor={'black'}
-   fontSize={'14'}
-    display={'flex'}
-    justifyContent={'center'}
-    alignItems={'center'}
-    textAlign={'center'}
-    to={'/contact'}
-    rounded={'full'}
-    px={6}
-    colorScheme={'orange'}
-    bg={'orange.400'}
-    _hover={{ bg: 'orange.500' }}
-     onClick={onOpen}>Donate</Button>
-  
-        <Modal
-          initialFocusRef={initialRef}
-          finalFocusRef={finalRef}
-          isOpen={isOpen}
-          onClose={onClose}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Create your account</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel>First name</FormLabel>
-                <Input ref={initialRef} placeholder='First name' />
-              </FormControl>
-  
-              <FormControl mt={4}>
-                <FormLabel>Last name</FormLabel>
-                <Input placeholder='Last name' />
-              </FormControl>
-            </ModalBody>
-  
-            <ModalFooter>
-              <Button colorScheme='blue' mr={3}>
-                Save
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+          <Stack spacing={6} direction={'row'}>
+            <Button
+              textColor={'black'}
+              fontSize={'14'}
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              textAlign={'center'}
+              to={'/contact'}
+              rounded={'full'}
+              px={6}
+              colorScheme={'orange'}
+              bg={'orange.400'}
+              _hover={{ bg: 'orange.500' }}
+              onClick={onOpen}
+            >
+              Donate
+            </Button>
+            <Modal
+              initialFocusRef={initialRef}
+              finalFocusRef={finalRef}
+              isOpen={isOpen}
+              onClose={onClose}
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Create your account</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody pb={6}>
+                  <FormControl>
+                    <FormLabel>First name</FormLabel>
+                    <Input ref={initialRef} placeholder="First name" />
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Last name</FormLabel>
+                    <Input placeholder="Last name" />
+                  </FormControl>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3}>
+                    Save
+                  </Button>
+                  <Button onClick={onClose}>Cancel</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </Stack>
+          <Flex w={'full'}>
+            <Illustration
+              height={{ sm: '24rem', lg: '28rem' }}
+              mt={{ base: 12, sm: 16 }}
+            />
+          </Flex>
         </Stack>
-        <Flex w={'full'}>
-          <Illustration
-            height={{ sm: '24rem', lg: '28rem' }}
-            mt={{ base: 12, sm: 16 }}
-          />
-        </Flex>
-      </Stack>
-    </Container>
+      </Container>
+    </Flex>
   );
 }
 
