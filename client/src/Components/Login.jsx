@@ -50,6 +50,7 @@ const Login = () => {
           <form onSubmit={handleFormSubmit}>
             <Stack spacing={3}>
               <Input
+                required
                 name="email"
                 type="email"
                 id="email"
@@ -58,6 +59,7 @@ const Login = () => {
                 placeholder="Email"
               />
               <Input
+                required
                 name="password"
                 type="password"
                 id="password"
