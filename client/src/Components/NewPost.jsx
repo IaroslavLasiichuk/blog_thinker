@@ -5,7 +5,6 @@ import Auth from '../utils/auth';
 import { WarningTwoIcon } from '@chakra-ui/icons';
 import { useMutation } from '@apollo/client';
 import { ADD_THOUGHT } from '../utils/mutations';
-import { QUERY_THOUGHTS, QUERY_ME } from '../utils/queries';
 
 import {
   Flex,
@@ -13,17 +12,14 @@ import {
   Heading,
   Stack,
   Text,
-  Input,
   Box,
   Textarea,
-  FormLabel,
   Button,
   useDisclosure,
 } from '@chakra-ui/react';
 
 import {
   Drawer,
-  DrawerBody,
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
@@ -33,26 +29,26 @@ import {
 
 export default function Profile() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [formState, setFormState] = useState({
     thoughtText: '',
-    
   });
-
   // Set up our mutation with an option to handle errors
   const [addThought, { error }] = useMutation(ADD_THOUGHT);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    if (!formState.thoughtText) {
+     alert('Please enter text!!!')
+      // Handle empty field error here, e.g., display an error message
+      return;
+    }
     // On form submit, perform mutation and pass in form data object as arguments
     // It is important that the object fields are match the defined parameters in `ADD_THOUGHT` mutation
     try {
       const { data } = addThought({
         variables: { ...formState }
-       
       });
-      // console.log(data);
+      setFormState({ thoughtText: '' });
 
     } catch (err) {
       console.error(err);
@@ -104,23 +100,14 @@ export default function Profile() {
                 </DrawerHeader>
                 <form onSubmit={handleFormSubmit}>
             <Stack spacing={3}>
-              {/* <Input
-                name="title"
-                type="text"
-                value={formState.title}
-                id="title"
-                onChange={handleChange}
-                variant="outline"
-                placeholder="Title"
-              /> */}
-             <Textarea name="thoughtText"
+             <Textarea 
+                name="thoughtText"
                 type="text"
                 value={formState.thoughtText}
                 id="content"
                 onChange={handleChange}
                 variant="outline"
-                placeholder="Content" placeholder="Here is a sample placeholder" />
-
+                placeholder="Please enter text..." />
               <Button
                 type="submit"
                 fontSize={'sm'}
