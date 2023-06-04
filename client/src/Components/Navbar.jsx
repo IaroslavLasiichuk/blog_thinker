@@ -305,13 +305,13 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Profile',
     children: [
       {
-        label: 'Add  Post',
-        subLabel: 'Create new post',
+        label: 'Add Post',
+        subLabel: 'Create and edit post',
         href: '/profile',
       },
       {
-        label: 'View Posts',
-        subLabel: 'View your posts',
+        label: 'Delete Post',
+        subLabel: 'Delete your posts',
         href: '/posts',
       },
     ],

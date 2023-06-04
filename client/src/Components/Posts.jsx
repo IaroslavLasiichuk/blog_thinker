@@ -1,12 +1,8 @@
 import React from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import { Link as RouterLink } from 'react-router-dom';
 import { WarningTwoIcon, AttachmentIcon, InfoIcon } from '@chakra-ui/icons';
 import {
   Spinner,
-  Flex,
-  Container,
   Heading,
   Stack,
   Text,
@@ -69,9 +65,9 @@ const Posts = () => {
 
   return (
     <>
-      <Flex minHeight="100vh" flexDir="column">
+      {/* <Flex minHeight="100vh" flexDir="column"> */}
        
-        <Container maxW={'5xl'} flex="1">
+        {/* <Container maxW={'5xl'} flex="1"> */}
           <Stack
             textAlign={'center'}
             align={'center'}
@@ -132,9 +128,9 @@ const Posts = () => {
               </>
             )}
           </Stack>
-        </Container>
+        {/* </Container> */}
       
-      </Flex>
+      {/* </Flex> */}
     </>
   );
 };
