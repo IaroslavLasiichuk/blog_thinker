@@ -1,12 +1,9 @@
 import React from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import DrawerPost from './DrawerPost';
 import { Link as RouterLink } from 'react-router-dom';
 import { WarningTwoIcon, AttachmentIcon, InfoIcon } from '@chakra-ui/icons';
 import {
   Spinner,
-  Flex,
-  Container,
   Heading,
   Stack,
   Text,
@@ -18,6 +15,7 @@ import {
   ListItem,
   ListIcon,
 } from '@chakra-ui/react';
+
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 
@@ -69,9 +67,6 @@ const Posts = () => {
 
   return (
     <>
-      <Flex minHeight="100vh" flexDir="column">
-       
-        <Container maxW={'5xl'} flex="1">
           <Stack
             textAlign={'center'}
             align={'center'}
@@ -93,6 +88,7 @@ const Posts = () => {
             <Heading as="h3" size="lg">
               List of your posts
             </Heading>
+            <DrawerPost/>
             {me && (
               <>
                 {me.thoughts.map((thought, index) => (
@@ -132,9 +128,6 @@ const Posts = () => {
               </>
             )}
           </Stack>
-        </Container>
-      
-      </Flex>
     </>
   );
 };
