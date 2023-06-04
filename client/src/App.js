@@ -13,7 +13,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: 'https://salty-eyrie-98942.herokuapp.com/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
