@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Login from './Login';
 import Signup from './Signup';
 import Auth from '../utils/auth';
@@ -12,7 +12,6 @@ import {
   Stack,
   Collapse,
   Icon,
-  Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -68,7 +67,7 @@ export default function WithSubnavigation() {
        
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* Logo link */}
-          <Link as={RouterLink} fontSize={'lg'} fontWeight={900} to="/">
+          <Link fontSize={'lg'} fontWeight={900} to="/">
             TNK
           </Link>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -146,7 +145,7 @@ const DesktopNav = () => {
             <Popover trigger={'hover'} placement={'bottom-start'}>
               <PopoverTrigger>
                 <Link
-                  as={RouterLink}
+                  
                   p={2}
                   to={navItem.href ?? '#'}
                   fontSize={'sm'}
@@ -188,7 +187,7 @@ const DesktopNav = () => {
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
     <Link
-      as={RouterLink}
+      
       to={href}
       role={'group'}
       display={'block'}
@@ -248,7 +247,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as={RouterLink}
+      
         to={href ?? '#'}
         justify={'space-between'}
         align={'center'}
@@ -284,7 +283,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map(child => (
-              <Link as={RouterLink} key={child.label} py={2} to={child.href}>
+              <Link key={child.label} py={2} to={child.href}>
                 {child.label}
               </Link>
             ))}
