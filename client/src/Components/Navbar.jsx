@@ -1,4 +1,4 @@
-import { Link as ChakraLink } from "@chakra-ui/react";
+// import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import Login from './Login';
 import Signup from './Signup';
@@ -68,9 +68,9 @@ export default function WithSubnavigation() {
        
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* Logo link */}
-          <ChakraLink as={RouterLink} fontSize={'lg'} fontWeight={900} to="/">
+          <RouterLink fontSize={'lg'} fontWeight={900} to="/">
             TNK
-          </ChakraLink>
+          </RouterLink>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -145,7 +145,7 @@ const DesktopNav = () => {
           <Box key={navItem.label}>
             <Popover trigger={'hover'} placement={'bottom-start'}>
               <PopoverTrigger>
-                <ChakraLink as={RouterLink}
+                <RouterLink
     
                   p={2}
                   to={navItem.href ?? '#'}
@@ -158,7 +158,7 @@ const DesktopNav = () => {
                   }}
                 >
                   {navItem.label}
-                </ChakraLink>
+                </RouterLink>
               </PopoverTrigger>
 
               {navItem.children && (
@@ -187,7 +187,7 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
-    <ChakraLink as={RouterLink}
+    <RouterLink
     
       to={href}
       role={'group'}
@@ -219,7 +219,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
-    </ChakraLink>
+    </RouterLink>
   );
 };
 
@@ -248,7 +248,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        
+        as={RouterLink}
         to={href ?? '#'}
         justify={'space-between'}
         align={'center'}
@@ -284,9 +284,9 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map(child => (
-              <ChakraLink as={RouterLink}  key={child.label} py={2} to={child.href}>
+              <RouterLink  key={child.label} py={2} to={child.href}>
                 {child.label}
-              </ChakraLink>
+              </RouterLink>
             ))}
         </Stack>
       </Collapse>
