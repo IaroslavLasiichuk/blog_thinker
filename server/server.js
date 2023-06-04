@@ -34,10 +34,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
-// app.get("/", (req, res) => {
-//   res.send("Hello from Blog Thinker server");
-// });
-
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Posts from './Posts';
 import Auth from '../utils/auth';
 import { WarningTwoIcon } from '@chakra-ui/icons';
 import { useMutation } from '@apollo/client';
@@ -16,6 +17,7 @@ import {
   Textarea,
   Button,
   useDisclosure,
+  useToast
 } from '@chakra-ui/react';
 
 import {
@@ -28,12 +30,15 @@ import {
 } from '@chakra-ui/react';
 
 export default function Profile() {
+
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formState, setFormState] = useState({
     thoughtText: '',
   });
   // Set up our mutation with an option to handle errors
   const [addThought, { error }] = useMutation(ADD_THOUGHT);
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -87,6 +92,7 @@ export default function Profile() {
           <Text color={'gray.500'} maxW={'3xl'}>
             This will be cool header for user profile!!!
           </Text>
+          <Posts/> 
           <Stack spacing={6} direction={'row'}>
                 <Button colorScheme="teal" onClick={onOpen}>
                   Create Post
@@ -100,7 +106,8 @@ export default function Profile() {
                 </DrawerHeader>
                 <form onSubmit={handleFormSubmit}>
             <Stack spacing={3}>
-             <Textarea 
+             <Textarea
+                required
                 name="thoughtText"
                 type="text"
                 value={formState.thoughtText}
@@ -108,7 +115,36 @@ export default function Profile() {
                 onChange={handleChange}
                 variant="outline"
                 placeholder="Please enter text..." />
-              <Button
+                <Button  type="submit"
+      onClick={() =>{
+        if(formState.thoughtText){
+          toast({
+            title: 'Post created.',
+            description: "We've created new post for you.",
+            status: 'success',
+            position: 'top',
+            duration: 4000,
+            isClosable: true,
+          })
+        }
+        else{
+          toast({
+            title: 'An error occurred.',
+            description: 'Unable to create post.',
+            status: 'error',
+            position: 'top',
+            duration: 5000,
+            isClosable: true,
+          })
+        }
+      }
+       
+        
+      }
+    >
+      Show Toast
+    </Button>
+              {/* <Button
                 type="submit"
                 fontSize={'sm'}
                 fontWeight={600}
@@ -119,7 +155,7 @@ export default function Profile() {
                 }}
               >
                 Submit
-              </Button>
+              </Button> */}
             </Stack>
           </form>
                 <DrawerFooter borderTopWidth="1px">

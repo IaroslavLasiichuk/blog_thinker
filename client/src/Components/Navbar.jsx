@@ -1,4 +1,3 @@
-// import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import Login from './Login';
 import Signup from './Signup';
