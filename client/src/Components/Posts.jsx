@@ -1,29 +1,9 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  Link,
-  Card,
-  Box,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  SimpleGrid,
-  Button,
-} from '@chakra-ui/react';
-import {
-  List,
-  ListItem,
-  ListIcon,
-  DeleteIcon, 
-  OrderedList,
-  UnorderedList,
-} from '@chakra-ui/react'
-import { 
-  WarningTwoIcon,
-  AttachmentIcon,
+import { Link, Textarea, Box, Button, List, ListItem, ListIcon } from '@chakra-ui/react';
 
-} from '@chakra-ui/icons';
-import { Spinner} from '@chakra-ui/react';
+import { WarningTwoIcon, AttachmentIcon, InfoIcon } from '@chakra-ui/icons';
+import { Spinner } from '@chakra-ui/react';
 
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -32,6 +12,12 @@ import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 
 const Posts = () => {
+  let [value, setValue] = React.useState('')
+
+  let handleInputChange = (e) => {
+    let inputValue = e.target.value
+    setValue(inputValue)
+  }
   const { loading, error, data } = useQuery(QUERY_ME);
   if (loading) {
     // Handle loading state, e.g., display a loading spinner
@@ -48,7 +34,7 @@ const Posts = () => {
       <div>
         Error: {error.message}
         <Box textAlign="center" py={10} px={6}>
-          <WarningTwoIcon boxSize={'50px'} color={'orange.300'}/>
+          <WarningTwoIcon boxSize={'50px'} color={'orange.300'} />
           <Heading
             textAlign={'center'}
             fontWeight={600}
@@ -73,11 +59,9 @@ const Posts = () => {
 
   return (
     <>
-      <Flex
-       minHeight="100vh" flexDir="column">
+      <Flex minHeight="100vh" flexDir="column">
         <Navbar />
-        <Container
-         maxW={'5xl'} flex="1">
+        <Container maxW={'5xl'} flex="1">
           <Stack
             textAlign={'center'}
             align={'center'}
@@ -100,30 +84,47 @@ const Posts = () => {
               List of your posts
             </Heading>
             {me && (
-            <>
-              {me.thoughts.map(thought => (
-                    <List spacing={3}>
-                    <ListItem
-                     padding={6} border='1px' borderColor='gray.200' borderRadius='20px'>
-                      <Text fontSize='3xl'> <ListIcon as={AttachmentIcon} color='green.500' />{thought.thoughtText}</Text>
-                      <Text>Post created at: {thought.createdAt} by {me.username} post ID:{thought._id} </Text>
-                      <Button marginX={2} colorScheme="orange">
-                   Delete
-                    </Button>
-                      <Button marginX={2} colorScheme="green">
-                   Edit
-                    </Button>
-                    </ListItem>
-                  </List>
-              ))}
-            </>
-          )}
+  <>
+    {me.thoughts.map((thought, index) => (
+      <List spacing={3} key={thought._id}>
+        <ListItem
+          padding={6}
+          border="1px"
+          borderColor="gray.200"
+          borderRadius="20px"
+        >
+          <Text fontSize="3xl">
+            {' '}
+            <ListIcon as={AttachmentIcon} color="green.500" />
+            {thought.thoughtText}
+          </Text>
+          <Text>
+          <InfoIcon
+           margin={2}
+            w={5} h={5} color="blue.500" />
+            Post created at: {thought.createdAt} by {me.username} post ID:{' '}
+            {thought._id}
+          </Text>
+          <Textarea
+           margin={2}
+        value={value}
+        onChange={handleInputChange}
+        placeholder='Edit post...'
+        size='sm'
+      />
+          <Button marginX={2} colorScheme="orange">
+            Delete
+          </Button>
+          <Button marginX={2} colorScheme="green">
+            Edit
+          </Button>
+        </ListItem>
+      </List>
+    ))}
+              </>
+            )}
           </Stack>
         </Container>
-        {/* <SimpleGrid marginX={6} spacing={6} minChildWidth="300px" columns={4}> */}
-        
-       
-    
         <Footer />
       </Flex>
     </>
