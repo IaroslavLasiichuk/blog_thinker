@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 import {
+  Text,
   Button,
   Stack,
   Input,
@@ -24,7 +25,7 @@ const Signup = () => {
     username: '',
   });
 
-  const [addUser] = useMutation(ADD_USER);
+  const [addUser, { error }] = useMutation(ADD_USER);
   const handleFormSubmit = async event => {
     event.preventDefault();
     const mutationResponse = await addUser({
@@ -55,6 +56,7 @@ const Signup = () => {
           <form onSubmit={handleFormSubmit}>
             <Stack spacing={3}>
               <Input
+                required
                 name="username"
                 type="username"
                 id="username"
@@ -63,6 +65,7 @@ const Signup = () => {
                 placeholder="Name"
               />
               <Input
+                required
                 name="email"
                 type="email"
                 id="email"
@@ -71,6 +74,7 @@ const Signup = () => {
                 placeholder="Email"
               />
               <Input
+                required
                 name="password"
                 type="password"
                 id="pwd"
@@ -78,6 +82,11 @@ const Signup = () => {
                 variant="outline"
                 placeholder="Password"
               />
+                {error ? (
+         <Text fontSize='15px' color='tomato'>
+        The provided credentials are incorrect
+       </Text>
+             ) : null}
               <Button
                 type="submit"
                 fontSize={'sm'}
