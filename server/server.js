@@ -21,20 +21,17 @@ const server = new ApolloServer({
 });
 
 // if we're in production, serve client/build as static assets
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static('../client/dist'));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname,  "../client/dist", "index.html"));
-  });
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
 }
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
-app.get("/", (req, res) => {
-  res.send("Hello from Blog Thinker server");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello from Blog Thinker server");
+// });
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
