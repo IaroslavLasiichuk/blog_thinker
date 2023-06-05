@@ -60,6 +60,21 @@ export const REMOVE_THOUGTH = gql`
   }
 }
 `;
+export const UPDATE_THOUGHT = gql`
+mutation updateThought($thoughtId: ID!, $thoughtText: String!) {
+  updateThought(thoughtId: $thoughtId, thoughtText: $thoughtText) {
+    _id
+    thoughtText
+    thoughtAuthor
+    createdAt
+    comments {
+      _id
+      commentText
+    }
+  }
+}
+`;
+
 
 export const ADD_COMMENT = gql`
   mutation addComment($thoughtId: ID!, $commentText: String!) {

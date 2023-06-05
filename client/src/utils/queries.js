@@ -32,6 +32,7 @@ export const QUERY_ME = gql`
         thoughtText
         thoughtAuthor
         createdAt
+        updatedAt
       }
     }
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Blog from './Blog';
 import {
   Flex,
   Container,
@@ -103,7 +104,9 @@ export default function CallToActionWithIllustration() {
               mt={{ base: 12, sm: 16 }}
             />
           </Flex>
+          <Blog/>
         </Stack>
+      
       </Container>
     </Flex>
   );
