@@ -5,6 +5,8 @@ import {
   Box,
   chakra,
   Container,
+  Textarea,
+  Button,
   Flex,
   Icon,
   SimpleGrid,
@@ -14,7 +16,42 @@ import {
 const Blog = () => {
   return (
     <div>
-      <Flex
+
+<Flex
+  
+      textAlign={'center'}
+      pt={10}
+      justifyContent={'center'}
+      direction={'column'}
+      width={'full'}
+      overflow={'hidden'}>
+      <Box width={{ base: 'full', sm: 'lg', lg: 'xl' }} margin={'auto'}>
+        <chakra.h1
+          py={5}
+          fontSize={48}
+          fontFamily={'Work Sans'}
+          fontWeight={'bold'}
+         >
+             Every developer has a
+tab open to Thinker
+        </chakra.h1>
+        <chakra.h2
+          margin={'auto'}
+          width={'70%'}
+          fontFamily={'Inter'}
+          fontWeight={'medium'}
+          color={useColorModeValue('gray.500', 'gray.400')}>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi architecto enim expedita dignissimos nisi.
+        </chakra.h2>
+      </Box>
+      <SimpleGrid
+      
+        columns={{ base: 1, xl: 2 }}
+        spacing={'20'}
+        mt={16}
+        mb={16}
+        mx={'auto'}>
+          <Flex
         boxShadow={'lg'}
         maxW={'640px'}
         direction={{ base: 'column-reverse', md: 'row' }}
@@ -23,7 +60,7 @@ const Blog = () => {
         p={10}
         justifyContent={'space-between'}
         position={'relative'}
-        bg={useColorModeValue('white', 'gray.800')}
+        bg={useColorModeValue('white', 'blue.800')}
         _after={{
           content: '""',
           position: 'absolute',
@@ -47,42 +84,48 @@ const Blog = () => {
           backgroundSize: 'cover',
           top: 0,
           left: 0,
-        //   backgroundImage: backgrounds[index % 4],
         }}
       >
-        <Flex
-          direction={'column'}
-          textAlign={'left'}
-          justifyContent={'space-between'}
-        >
-          <chakra.p
-            fontFamily={'Inter'}
-            fontWeight={'medium'}
-            fontSize={'15px'}
-            pb={4}
-          >
-            {/* {content} */}
-          </chakra.p>
-          <chakra.p fontFamily={'Work Sans'} fontWeight={'bold'} fontSize={14}>
-            {/* {name} */}
-            <chakra.span
-              fontFamily={'Inter'}
-              fontWeight={'medium'}
-              color={'gray.500'}
-            >
-              {' '}
-              {/* - {role} */}
-            </chakra.span>
-          </chakra.p>
-        </Flex>
-        <Avatar
-        //   src={avatar}
-          height={'80px'}
-          width={'80px'}
-          alignSelf={'center'}
-          m={{ base: '0 0 35px 0', md: '0 0 0 50px' }}
-        />
+      <Flex
+  direction={'column'}
+  textAlign={'center'}
+  justifyContent={'space-between'}
+  border="1px"
+  borderColor="gray.200"
+  borderRadius="lg"
+  p={4}
+>
+  <chakra.p
+    fontFamily={'Inter'}
+    fontWeight={'medium'}
+    fontSize={'15px'}
+    pb={4}
+  >
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, delectus libero saepe illo, quo ut ex quam laborum unde id odio maxime molestias fuga enim, perferendis quia nemo. Unde, nesciunt.
+  </chakra.p>
+  <chakra.p fontFamily={'Work Sans'} fontWeight={'bold'} fontSize={14}>
+    {/* {name} */}Iaroslav  
+    <chakra.span
+      fontFamily={'Inter'}
+      fontWeight={'medium'}
+      color={'gray.500'}
+    >
+    </chakra.span>
+  </chakra.p>
+  <Textarea />
+  <Button
+    margin={3}
+    width={'20%'}
+    colorScheme="orange"
+    mr={3}
+  >
+    Comment
+  </Button>
+</Flex>
+
       </Flex>
+      </SimpleGrid>
+    </Flex>
     </div>
   );
 };
