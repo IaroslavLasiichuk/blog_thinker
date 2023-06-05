@@ -43,15 +43,17 @@ const Posts = () => {
       const { data } = await updateThought({
         variables: {
           thoughtId: thoughtId,
-          thoughtText: thoughtText,
+          thoughtText: thoughtText[thoughtId] || ''
         },
       });
-      console.log(data);
       // Handle success, e.g., display a success message or update the UI
       console.log('Thought updated:', data.updateThought);
 
       // Clear the form input
-      setThoughtText('');
+      setThoughtText(prevState => ({
+        ...prevState,
+        [thoughtId]: ''
+      }));
     } catch (error) {
       // Handle error, e.g., display an error message or handle specific errors
       console.error('Failed to update thought:', error);
@@ -95,7 +97,6 @@ const Posts = () => {
 
   // Destructure the user data from the response
   const { me } = data;
-console.log(me);
   return (
     <>
       <Stack
@@ -144,9 +145,15 @@ console.log(me);
                     Post updated at: {thought.updatedAt} 
                   </Text> */}
                   <Textarea
+                    id={thought._id}
                     margin={2}
-                    value={thoughtText}
-                    onChange={e => setThoughtText(e.target.value)}
+                    value={thoughtText[thought._id] || ''}
+                    onChange={e =>
+                      setThoughtText(prevState => ({
+                        ...prevState,
+                        [thought._id]: e.target.value,
+                      }))
+                    }
                     placeholder="Edit post..."
                     size="sm"
                   />
