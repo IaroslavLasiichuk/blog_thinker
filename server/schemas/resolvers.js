@@ -80,6 +80,33 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    updateThought: async (parent, { thoughtId, thoughtText }, context) => {
+      // Check if the user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+    
+      // Find the thought by its ID and check if it exists
+      const thought = await Thought.findById(thoughtId);
+      if (!thought) {
+        throw new Error('Thought not found');
+      }
+    
+      // Verify if the authenticated user is the author of the thought
+      if (thought.thoughtAuthor !== context.user.username) {
+        throw new AuthorizationError('You are not authorized to update this thought');
+      }
+    
+      // Update the thoughtText field
+      thought.thoughtText = thoughtText;
+    
+      // Save the updated thought to the database
+      await thought.save();
+    
+      // Return the updated thought
+      return thought;
+    },
+
     removeThought: async (parent, { thoughtId }, context) => {
       if (context.user) {
         const thought = await Thought.findOneAndDelete({
