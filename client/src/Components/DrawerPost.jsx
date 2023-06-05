@@ -17,7 +17,7 @@ import {
     DrawerCloseButton,
   } from '@chakra-ui/react';
 
-  import { AddIcon, WarningIcon } from '@chakra-ui/icons'
+  import { AddIcon } from '@chakra-ui/icons'
 
   import Auth from '../utils/auth';
 import { useMutation, useQuery } from '@apollo/client';
@@ -43,7 +43,14 @@ import { QUERY_ME } from '../utils/queries';
     const handleFormSubmit = async (event) => {
       event.preventDefault();
       if (!formState.thoughtText) {
-       alert('Please enter text!!!')
+        toast({
+          title: 'An error occurred',
+          description: 'Please enter text!!!',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+
         // Handle empty field error here, e.g., display an error message
         return;
       }
@@ -62,7 +69,6 @@ import { QUERY_ME } from '../utils/queries';
   
     const handleChange = (event) => {
       const { name, value } = event.target;
-  
       if (name === 'thoughtText') {
         setFormState({ ...formState, [name]: value });
       }
@@ -71,11 +77,9 @@ import { QUERY_ME } from '../utils/queries';
     return (
         <>
            {Auth.loggedIn() ? (
-       
        <Stack
          textAlign={'center'}
          align={'center'}
-         
        >
          <Stack spacing={6} direction={'row'}>
          <Button colorScheme="teal" onClick={onOpen}>

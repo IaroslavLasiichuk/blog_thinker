@@ -1,46 +1,85 @@
 import React from 'react';
-import DrawerPost from './DrawerPost';
+import Navbar from './Navbar';
+import Footer from './Footer';
 import { Link as RouterLink } from 'react-router-dom';
 import { WarningTwoIcon, AttachmentIcon, InfoIcon } from '@chakra-ui/icons';
 import {
+  Flex,
+  Container,
   Spinner,
   Heading,
   Stack,
   Text,
   Link,
-  Textarea,
   Box,
   Button,
   List,
   ListItem,
   ListIcon,
+  useToast
 } from '@chakra-ui/react';
 
-import { useQuery } from '@apollo/client';
+import Auth from '../utils/auth';
+import { useMutation, useQuery } from '@apollo/client';
+import { REMOVE_THOUGTH } from '../utils/mutations';
 import { QUERY_ME } from '../utils/queries';
 
 const Posts = () => {
-  let [value, setValue] = React.useState('');
+    const toast = useToast();
+    const { loading, error, data, refetch } = useQuery(QUERY_ME);
+   
+    const [removeThought, { error: deleteError }] = useMutation(REMOVE_THOUGTH, {
+      onCompleted: () => {
+        refetch();
+        toast({
+          title: 'Post deleted',
+          description: 'The post has been successfully deleted.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+      onError: (error) => {
+        console.error(deleteError);
+        toast({
+          title: 'An error occurred',
+          description: 'Failed to delete the post. Please try again.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+    });
+  
+    const handleDeletePost = async (thoughtId) => {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-  let handleInputChange = e => {
-    let inputValue = e.target.value;
-    setValue(inputValue);
-  };
-  const { loading, error, data } = useQuery(QUERY_ME);
-  if (loading) {
-    // Handle loading state, e.g., display a loading spinner
-    return (
-      <Stack direction="row" spacing={4}>
-        <Spinner size="xl" />
-      </Stack>
-    );
-  }
+    if (!token) {
+      return false;
+    }
 
-  if (error) {
-    // Handle error state, e.g., display an error message
-    return (
-      <div>
-        Error: {error.message}
+      try {
+
+        const { data } = await removeThought({
+          variables: { thoughtId },
+        });
+      } catch (err) {
+        console.log(data);
+        console.error(err);
+      }
+    };
+  
+    if (loading) {
+      return (
+        <Stack direction="row" spacing={4}>
+          <Spinner size="xl" />
+        </Stack>
+      );
+    }
+    if (error) {
+      return (
+        <div>
+         Error: {error.message}
         <Box textAlign="center" py={10} px={6}>
           <WarningTwoIcon boxSize={'50px'} color={'orange.300'} />
           <Heading
@@ -58,15 +97,16 @@ const Posts = () => {
             GO HOME
           </Link>
         </Box>
-      </div>
-    );
-  }
-
-  // Destructure the user data from the response
-  const { me } = data;
+        </div>
+      );
+    }
+    const { me } = data;
 
   return (
     <>
+     <Flex minHeight="100vh" flexDir="column">
+    <Navbar/>
+    <Container maxW={'5xl'}  flex="1">
           <Stack
             textAlign={'center'}
             align={'center'}
@@ -85,10 +125,15 @@ const Posts = () => {
               </Text>{' '}
               to your profile
             </Heading>
-            <Heading as="h3" size="lg">
-              List of your posts
-            </Heading>
-            <DrawerPost/>
+            {!me.thoughts.length ? (
+  <Heading as="h3" size="lg">
+ No posts
+</Heading>
+) : (
+  <Heading as="h3" size="lg">
+    List of your posts
+  </Heading>
+)}
             {me && (
               <>
                 {me.thoughts.map((thought, index) => (
@@ -107,20 +152,10 @@ const Posts = () => {
                       <Text>
                         <InfoIcon margin={2} w={5} h={5} color="blue.500" />
                         Post created at: {thought.createdAt} by {me.username}{' '}
-                        post ID: {thought._id}
+                        post ID: {thought._id} 
                       </Text>
-                      <Textarea
-                        margin={2}
-                        value={value}
-                        onChange={handleInputChange}
-                        placeholder="Edit post..."
-                        size="sm"
-                      />
-                      {/* <Button marginX={2} colorScheme="orange">
+                      <Button onClick={() => handleDeletePost(thought._id)} marginX={2} colorScheme="orange">
                         Delete
-                      </Button> */}
-                      <Button marginX={2} colorScheme="green">
-                        Edit
                       </Button>
                     </ListItem>
                   </List>
@@ -128,6 +163,9 @@ const Posts = () => {
               </>
             )}
           </Stack>
+          </Container>
+          <Footer/>
+          </Flex>
     </>
   );
 };

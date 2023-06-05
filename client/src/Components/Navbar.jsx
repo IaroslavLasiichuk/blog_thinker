@@ -312,7 +312,7 @@ const NAV_ITEMS: Array<NavItem> = [
       {
         label: 'Delete Post',
         subLabel: 'Delete your posts',
-        href: '/posts',
+        href: '/delete',
       },
     ],
   },
