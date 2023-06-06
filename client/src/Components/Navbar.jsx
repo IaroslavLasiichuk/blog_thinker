@@ -1,4 +1,8 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
+import Login from './Login';
+import Signup from './Signup';
+import Auth from '../utils/auth';
+
 import {
   Box,
   Flex,
@@ -8,8 +12,6 @@ import {
   Stack,
   Collapse,
   Icon,
-  Input,
-  Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -17,22 +19,7 @@ import {
   useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
-import {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-} from '@chakra-ui/react';
-
-import {
-  FormControl,
-  FormLabel,
-  //   FormErrorMessage,
-  FormHelperText,
-} from '@chakra-ui/react';
+import { Drawer, DrawerOverlay } from '@chakra-ui/react';
 
 import {
   HamburgerIcon,
@@ -61,30 +48,28 @@ export default function WithSubnavigation() {
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
       >
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}
-        >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant={'ghost'}
-            aria-label={'Toggle Navigation'}
-          />
-        </Flex>
+          {Auth.loggedIn() && (
+                      <Flex
+                      flex={{ base: 1, md: 'auto' }}
+                      ml={{ base: -2 }}
+                      display={{ base: 'flex', md: 'none' }}
+                    >
+                      <IconButton
+                        onClick={onToggle}
+                        icon={
+                          isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+                        }
+                        variant={'ghost'}
+                        aria-label={'Toggle Navigation'}
+                      />
+                    </Flex>
+                    )}
+       
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* Logo link */}
-          <Link
-              as={RouterLink}
-            fontSize={'lg'}
-            fontWeight={900}
-            to='/'
-          >
-            LOGO
-          </Link>
+          <RouterLink fontSize={'lg'} fontWeight={900} to="/">
+            TNK
+          </RouterLink>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -96,33 +81,23 @@ export default function WithSubnavigation() {
           spacing={6}
         >
           {/* Drawer for Login */}
-          <Button onClick={drawerLogin.onOpen}>Login</Button>
           <Drawer isOpen={drawerLogin.isOpen} onClose={drawerLogin.onClose}>
             <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Login</DrawerHeader>
-              <DrawerBody>
-                <FormControl>
-                  <FormLabel>Email address</FormLabel>
-                  <Input type="email" />
-                  <FormHelperText>We'll never share your email.</FormHelperText>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Password</FormLabel>
-                  <Input type="password" />
-                </FormControl>
-              </DrawerBody>
-              <DrawerFooter>
-                <Button type="submit" form="my-form">
-                  Submit
-                </Button>
-              </DrawerFooter>
-            </DrawerContent>
+            <Login />
           </Drawer>
-
-          {/* Drawer for Sugn Up */}
-          <Button
+          {/* Drawer for Sign Up */}
+          {Auth.loggedIn() ? (
+                <>
+                 <Button
+                      onClick={Auth.logout}
+                        >
+                        Logout
+                      </Button>
+                </>
+              ) : (
+               <>
+                <Button onClick={drawerLogin.onOpen}>Login</Button>
+                 <Button
             onClick={drawer.onOpen}
             as={'a'}
             fontSize={'sm'}
@@ -135,42 +110,11 @@ export default function WithSubnavigation() {
           >
             Sign Up
           </Button>
+               </>
+              )}
           <Drawer isOpen={drawer.isOpen} onClose={drawer.onClose}>
             <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Create your account</DrawerHeader>
-              <DrawerBody>
-                <FormControl>
-                  <FormLabel>Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Email address</FormLabel>
-                  <Input type="email" />
-                  <FormHelperText>We'll never share your email.</FormHelperText>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Password</FormLabel>
-                  <Input type="password" />
-                </FormControl>
-              </DrawerBody>
-              <DrawerFooter>
-                <Button
-                  fontSize={'sm'}
-                  fontWeight={600}
-                  color={'white'}
-                  bg={'pink.400'}
-                  _hover={{
-                    bg: 'pink.300',
-                  }}
-                  type="submit"
-                  form="my-form"
-                >
-                  Submit
-                </Button>
-              </DrawerFooter>
-            </DrawerContent>
+            <Signup />
           </Drawer>
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
@@ -191,53 +135,59 @@ const DesktopNav = () => {
 
   return (
     <Stack direction={'row'} spacing={4}>
-      {NAV_ITEMS.map(navItem => (
-        <Box key={navItem.label}>
-          <Popover trigger={'hover'} placement={'bottom-start'}>
-            <PopoverTrigger>
-              <Link
-                as={RouterLink}
-                p={2}
-                to={navItem.href ?? '#'}
-                fontSize={'sm'}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: 'none',
-                  color: linkHoverColor,
-                }}
-              >
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
+      {NAV_ITEMS.map(navItem => {
+        if (!Auth.loggedIn()) {
+          return null;
+        }
 
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={'xl'}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={'xl'}
-                minW={'sm'}
-              >
-                <Stack>
-                  {navItem.children.map(child => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
-      ))}
+        return (
+          <Box key={navItem.label}>
+            <Popover trigger={'hover'} placement={'bottom-start'}>
+              <PopoverTrigger>
+                <RouterLink
+    
+                  p={2}
+                  to={navItem.href ?? '#'}
+                  fontSize={'sm'}
+                  fontWeight={500}
+                  color={linkColor}
+                  _hover={{
+                    textDecoration: 'none',
+                    color: linkHoverColor,
+                  }}
+                >
+                  {navItem.label}
+                </RouterLink>
+              </PopoverTrigger>
+
+              {navItem.children && (
+                <PopoverContent
+                  border={0}
+                  boxShadow={'xl'}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={'xl'}
+                  minW={'sm'}
+                >
+                  <Stack>
+                    {navItem.children.map(child => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+            </Popover>
+          </Box>
+        );
+      })}
     </Stack>
   );
 };
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
-    <Link
-      as={RouterLink}
+    <RouterLink
+    
       to={href}
       role={'group'}
       display={'block'}
@@ -268,7 +218,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
-    </Link>
+    </RouterLink>
   );
 };
 
@@ -279,9 +229,13 @@ const MobileNav = () => {
       p={4}
       display={{ md: 'none' }}
     >
-      {NAV_ITEMS.map(navItem => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
+      {NAV_ITEMS.map(navItem => {
+        if (!Auth.loggedIn()) {
+          return null; // Skip rendering the MobileNavItem if it should only be shown when logged in and the user is not logged in
+        }
+
+        return <MobileNavItem key={navItem.label} {...navItem} />;
+      })}
     </Stack>
   );
 };
@@ -329,9 +283,9 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map(child => (
-              <Link as={RouterLink} key={child.label} py={2} to={child.href}>
+              <RouterLink  key={child.label} py={2} to={child.href}>
                 {child.label}
-              </Link>
+              </RouterLink>
             ))}
         </Stack>
       </Collapse>
@@ -351,17 +305,18 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Profile',
     children: [
       {
-        label: 'Add  Post',
-        subLabel: 'Create new post',
+        label: 'Add Post',
+        subLabel: 'Create and edit post',
         href: '/profile',
       },
       {
-        label: 'View Posts',
-        subLabel: 'View your posts',
-        href: '/profile',
+        label: 'Delete Post',
+        subLabel: 'Delete your posts',
+        href: '/delete',
       },
     ],
   },
+
   {
     label: 'Contact',
     href: '/contact',
