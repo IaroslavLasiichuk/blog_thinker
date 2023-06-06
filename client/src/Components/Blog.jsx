@@ -127,7 +127,19 @@ export default function Blog() {
                     nemo dolores fugiat, laborum aliquid.
                   </CommentText>
                   <Textarea margin={4}></Textarea>
-                  <Button>Comment</Button>
+                  <Button textColor={'black'}
+              fontSize={'14'}
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              textAlign={'center'}
+              to={'/contact'}
+              rounded={'full'}
+              px={6}
+              colorScheme={'orange'}
+              bg={'orange.400'}
+              _hover={{ bg: 'orange.500' }}
+              >Comment</Button>
                 </PostContent>
               </Post>
             </Stack>
