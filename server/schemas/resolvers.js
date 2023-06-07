@@ -43,10 +43,18 @@ const resolvers = {
       }
 
       const token = signToken(user);
+      const context = {
+        user: {
+          _id: user._id,
+          email: user.email,
+          username: user.username, // Include the username property
+        },
+      };
 
       return { token, user };
     },
     addThought: async (parent, { thoughtText }, context) => {
+      console.log(context.user);
       if (context.user) {
         const thought = await Thought.create({
           thoughtText,
@@ -92,9 +100,9 @@ const resolvers = {
       }
     
       // Verify if the authenticated user is the author of the thought
-      if (thought.thoughtAuthor !== context.user.username) {
-        throw new AuthorizationError('You are not authorized to update this thought');
-      }
+      // if (thought.thoughtAuthor !== context.user.username) {
+      //   throw new AuthorizationError('You are not authorized to update this thought');
+      // }
     
       // Update the thoughtText field
       thought.thoughtText = thoughtText;
