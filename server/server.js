@@ -1,8 +1,10 @@
 const express = require("express");
 const path = require("path");
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 require("dotenv").config();
 const { authMiddleware } = require('./utils/auth');
+const { Form } = require('./models');
 
 // Import the ApolloServer class
 const { typeDefs, resolvers } = require("./schemas");
@@ -33,6 +35,46 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// Nodemailer
+// app.post('/send', async (req, res) => {
+//   try {
+//     // Save the form data to the database
+//     const newForm = await Form.create(req.body.mailerState);
+//     console.log(newForm);
+//     // Send the email
+//     let mailTransporter = nodemailer.createTransport({
+//       service: 'gmail',
+//       auth: {
+//         user: process.env.EMAIL,
+//         pass: process.env.WORD
+//       }
+//     });
+
+//     let mailDetails = {
+//       header: `This message from Thinker`
+//       from: `${req.body.mailerState.email}`,
+//       to: process.env.EMAIL,
+//       subject: `Message from: ${req.body.mailerState.email}`,
+//       text: `Name: ${req.body.mailerState.name}.Message: ${req.body.mailerState.message}`
+//     };
+
+//     mailTransporter.sendMail(mailDetails, function (err, data) {
+//       if (err) {
+//         console.log(err);
+//         // Send a failure response if email sending fails
+//         res.status(500).json({ status: 'fail' });
+//       } else {
+//         console.log('Email sent successfully from server');
+//         // Send a success response if email sending is successful
+//         res.status(200).json({ status: 'success' });
+//       }
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     // Send a failure response if saving to the database fails
+//     res.status(500).json({ status: 'fail' });
+//   }
+// });
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
