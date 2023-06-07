@@ -100,10 +100,31 @@ const CommentText = ({ children }: { children: ReactNode }) => {
 };
 
 export default function Blog() {
-  const { loading, data } = useQuery(QUERY_THOUGHTS);
-  const thoughts = data?.thoughts || [];
-console.log(thoughts);
+  const bgColor = useColorModeValue('gray.50', 'gray.800');
+  const bgBoxColor = useColorModeValue('gray.100', 'gray.700');
+  const { loading, error, data } = useQuery(QUERY_THOUGHTS);
+  if (loading) {
+    // Handle loading state, e.g., display a loading spinner
+    return (
+      <Stack direction="row" spacing={4}>
+        <Spinner size="xl" />
+      </Stack>
+    );
+  }
 
+  if (error) {
+    // Handle error state, e.g., display an error message
+    return (
+      <div>
+        Error: {error.message}
+      </div>
+    );
+  }
+  const {thoughts} = data;
+  // const user = users.map((th)=>{
+  //   console.log(data);
+  // });
+console.log(thoughts);
   return (
     <>
       <Flex
@@ -111,9 +132,11 @@ console.log(thoughts);
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}
+        bg={bgColor}
       >
-        <Box bg={useColorModeValue('gray.100', 'gray.700')}>
+        <Box
+         bg={bgBoxColor}
+         >
           <Container maxW={'7xl'} py={16} as={Stack} spacing={12} flex="3">
             <Stack spacing={0} align={'center'}>
               <Heading>Every developer has a tab open to Thinker</Heading>
@@ -124,22 +147,24 @@ console.log(thoughts);
               direction={{ base: 'column', md: 'column' }}
               spacing={{ base: 10, md: 1, lg: 10 }}
             >
-               {thoughts &&
-        thoughts.map((thought) => (
+               {thoughts && (
+                 <>
+        {thoughts.map((thought) => (
                 <Post key={thought._id}>
                 <PostContent>
                   <PostText>
                   {thought.thoughtText}
                   </PostText>
 
-                  <AuthorName>Author name: </AuthorName>
+                  <AuthorName>{thought.thoughtAuthor}</AuthorName>
                   <CreatedAt>{thought.createdAt}</CreatedAt>
-                  <CommentText>
+                  {!thought.comments ? <div>'no comments'</div> : <CommentText>
                     {' '}
                     perspiciatis odio deleniti autem! Est recusandae eveniet
                     possimus repellendus dolore voluptate laboriosam tempore
                     nemo dolores fugiat, laborum aliquid.
-                  </CommentText>
+                  </CommentText>}
+                  
                   <Textarea
                     margin={4}
                     placeholder={'Enter your comment'}
@@ -162,7 +187,9 @@ console.log(thoughts);
                   </Button>
                 </PostContent>
               </Post>
-              ))}
+                ))}
+                </>
+              )}
               
             </Stack>
           </Container>

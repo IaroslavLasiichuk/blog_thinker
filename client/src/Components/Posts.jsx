@@ -97,6 +97,8 @@ const Posts = () => {
 
   // Destructure the user data from the response
   const { me } = data;
+  // console.log(me);
+
   return (
     <>
       <Stack
