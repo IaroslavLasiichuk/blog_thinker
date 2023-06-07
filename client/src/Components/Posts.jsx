@@ -21,6 +21,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { UPDATE_THOUGHT } from '../utils/mutations';
 
+
 const Posts = () => {
   let [value, setValue] = React.useState('');
 
@@ -31,6 +32,7 @@ const Posts = () => {
   const { loading, error, data } = useQuery(QUERY_ME);
   const [thoughtText, setThoughtText] = useState('');
   const [updateThought, { err }] = useMutation(UPDATE_THOUGHT);
+
 
   const handleUpdate = async thoughtId => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;

@@ -26,6 +26,7 @@
     "graphql": "^16.6.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.2",
+    "nodemailer": "^6.9.3",
     "strip": "^3.0.0"
   }
 }

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import {
@@ -13,6 +14,48 @@ import {
 } from '@chakra-ui/react';
 
 export default function SplitScreen() {
+  // const [mailerState, setMailerState] = useState({
+  //   name: "",
+  //   email: "",
+  //   message: "",
+  // });
+
+  // function handleStateChange(e) {
+  //   setMailerState((prevState) => ({
+  //     ...prevState,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // }
+
+  // const submitEmail = async (e) => {
+  //   e.preventDefault();
+  //   console.log({ mailerState });
+  //   const response = await fetch(" http://localhost:4000/send", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({mailerState }),
+      
+  //   })
+  //     .then((res) => res.json())
+  //     .then(async (res) => {
+  //       const resData = await res;
+  //       if (resData.status === 'success') {
+  //         alert("Message Sent");
+  //       } else if (resData.status === "fail") {
+  //         alert("Message failed to send");
+  //       }
+  //     })
+  //     .then(() => {
+  //       setMailerState({
+  //         name: "",
+  //         email: "",
+  //         message: "",
+  //       });
+  //     });
+  // };
+
   return (
     <>
       <Flex minHeight="100vh" flexDir="column">
@@ -21,19 +64,50 @@ export default function SplitScreen() {
           <Flex p={8} flex={1} align={'center'} justify={'center'}>
             <Stack spacing={4} w={'full'} maxW={'md'}>
               <Heading fontSize={'2xl'}>Contact Us</Heading>
+              <form
+            // onSubmit={submitEmail}
+          >
               <FormControl id="name">
                 <FormLabel>Name</FormLabel>
-                <Input type="text" />
+                <Input
+                 name="name"
+                //  onChange={handleStateChange}
+                //  value={mailerState.name}
+                 type="text"
+                 id="name"
+                 required />
+              </FormControl>
+              <FormControl id="email">
+                <FormLabel>Email</FormLabel>
+                <Input 
+                name="email"
+                //  onChange={handleStateChange}
+                //  value={mailerState.email}
+                type="text"
+                id="name"
+                required />
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Message</FormLabel>
-                <Textarea placeholder="Here is a sample placeholder" />
+                <Textarea
+                name="message"
+                //  onChange={handleStateChange}
+                //  value={mailerState.message}
+                 id="message"
+                 required
+                  placeholder="Here is a sample placeholder" />
               </FormControl>
               <Stack spacing={6}>
-                <Button colorScheme={'blue'} variant={'solid'}>
+                <Button 
+                 type="submit"
+                //  onSubmit={submitEmail}
+                colorScheme={'blue'}
+                 variant={'solid'}>
                   Send
                 </Button>
+               
               </Stack>
+              </form>
             </Stack>
           </Flex>
           <Flex flex={1}>

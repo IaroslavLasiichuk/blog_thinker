@@ -8,7 +8,6 @@ const thoughtSchema = new Schema({
   },
   thoughtAuthor: {
     type: String,
-    // required: true,
     trim: true,
   },
   createdAt: {
@@ -31,7 +30,7 @@ const thoughtSchema = new Schema({
       },
       commentAuthor: {
         type: String,
-        required: true,
+        trim: true,
       },
       createdAt: {
         type: Date,
