@@ -11,50 +11,64 @@ import {
   Stack,
   Image,
   Textarea,
+  useToast
 } from '@chakra-ui/react';
 
-export default function SplitScreen() {
-  // const [mailerState, setMailerState] = useState({
-  //   name: "",
-  //   email: "",
-  //   message: "",
-  // });
+export default function Contact() {
+  const toast = useToast();
+  const [mailerState, setMailerState] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-  // function handleStateChange(e) {
-  //   setMailerState((prevState) => ({
-  //     ...prevState,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // }
+  function handleStateChange(e) {
+    setMailerState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  }
 
-  // const submitEmail = async (e) => {
-  //   e.preventDefault();
-  //   console.log({ mailerState });
-  //   const response = await fetch(" http://localhost:4000/send", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({mailerState }),
+  const submitEmail = async (e) => {
+    e.preventDefault();
+    console.log({ mailerState });
+    const response = await fetch("/send", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body:JSON.stringify({ mailerState }),
       
-  //   })
-  //     .then((res) => res.json())
-  //     .then(async (res) => {
-  //       const resData = await res;
-  //       if (resData.status === 'success') {
-  //         alert("Message Sent");
-  //       } else if (resData.status === "fail") {
-  //         alert("Message failed to send");
-  //       }
-  //     })
-  //     .then(() => {
-  //       setMailerState({
-  //         name: "",
-  //         email: "",
-  //         message: "",
-  //       });
-  //     });
-  // };
+    })
+      .then((res) => res.json())
+      .then(async (res) => {
+        const resData = await res;
+        if (resData.status === 'success') {
+          toast({
+            title: 'Message Sent',
+            description: 'The message has been successfully sent.',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+          });
+        } else if (resData.status === "fail") {
+          toast({
+            title: 'An error occurred',
+            description: 'Message failed to send.',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      })
+      .then(() => {
+        setMailerState({
+          name: "",
+          email: "",
+          message: "",
+        });
+      });
+  };
 
   return (
     <>
@@ -65,14 +79,14 @@ export default function SplitScreen() {
             <Stack spacing={4} w={'full'} maxW={'md'}>
               <Heading fontSize={'2xl'}>Contact Us</Heading>
               <form
-            // onSubmit={submitEmail}
+            onSubmit={submitEmail}
           >
               <FormControl id="name">
                 <FormLabel>Name</FormLabel>
                 <Input
                  name="name"
-                //  onChange={handleStateChange}
-                //  value={mailerState.name}
+                 onChange={handleStateChange}
+                 value={mailerState.name}
                  type="text"
                  id="name"
                  required />
@@ -81,8 +95,8 @@ export default function SplitScreen() {
                 <FormLabel>Email</FormLabel>
                 <Input 
                 name="email"
-                //  onChange={handleStateChange}
-                //  value={mailerState.email}
+                 onChange={handleStateChange}
+                 value={mailerState.email}
                 type="text"
                 id="name"
                 required />
@@ -91,8 +105,8 @@ export default function SplitScreen() {
                 <FormLabel>Message</FormLabel>
                 <Textarea
                 name="message"
-                //  onChange={handleStateChange}
-                //  value={mailerState.message}
+                 onChange={handleStateChange}
+                 value={mailerState.message}
                  id="message"
                  required
                   placeholder="Here is a sample placeholder" />
@@ -100,7 +114,7 @@ export default function SplitScreen() {
               <Stack spacing={6}>
                 <Button 
                  type="submit"
-                //  onSubmit={submitEmail}
+                 onSubmit={submitEmail}
                 colorScheme={'blue'}
                  variant={'solid'}>
                   Send
