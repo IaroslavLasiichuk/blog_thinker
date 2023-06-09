@@ -1,22 +1,23 @@
-import { ReactNode } from 'react';
-import React, { useState, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import DrawerPost from './DrawerPost';
+import React from 'react';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import CommentForm from './CommentForm';
 import {
-  Text,
+ Spinner,
   Box,
   Flex,
   Heading,
+  Text,
   Stack,
   Container,
-  Spinner,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { ArrowRightIcon } from '@chakra-ui/icons';
 
+// Import the `useParams()` hook
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { QUERY_THOUGHTS } from '../utils/queries';
 
+import { QUERY_SINGLE_THOUGHT } from '../utils/queries';
 
 const Post = ({ children }: { children: ReactNode }) => {
   return <Box>{children}</Box>;
@@ -37,6 +38,33 @@ const PostContent = ({ children }: { children: ReactNode }) => {
   );
 };
 
+const AuthorName = ({ children }: { children: ReactNode }) => {
+  return (
+    <Text
+    textalign={'center'}
+      color={useColorModeValue('gray.600', 'gray.400')}
+      fontSize={'sm'}
+    >
+      {children}
+    </Text>
+  );
+};
+
+const CreatedAt = ({ children }: { children: ReactNode }) => {
+  return (
+    <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize={'sm'}>
+      {children}
+    </Text>
+  );
+};
+
+const PostText = ({ children }: { children: ReactNode }) => {
+  return (
+    <Heading as={'h3'} fontSize={'xl'}>
+      {children}
+    </Heading>
+  );
+};
 const CommentText = ({ children }: { children: ReactNode }) => {
   return (
     <Stack
@@ -70,43 +98,14 @@ const CommentText = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const AuthorName = ({ children }: { children: ReactNode }) => {
-  return (
-    <Text
-      textAlign={'center'}
-      color={useColorModeValue('gray.600', 'gray.400')}
-      fontSize={'sm'}
-    >
-      {children}
-    </Text>
-  );
-};
-
-const CreatedAt = ({ children }: { children: ReactNode }) => {
-  return (
-    <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize={'sm'}>
-      {children}
-    </Text>
-  );
-};
-
-const PostText = ({ children }: { children: ReactNode }) => {
-  return (
-    <Heading as={'h3'} fontSize={'xl'}>
-      {children}
-    </Heading>
-  );
-};
-
-
-function Blog() {
+const SingleThought = () => {
   const bgColor = useColorModeValue('gray.50', 'gray.800');
   const bgBoxColor = useColorModeValue('gray.100', 'gray.700');
-  const [formState, setFormState] = useState({
-    commentText: '',
+  const { thoughtId } = useParams();
+  const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
+    variables: { thoughtId: thoughtId },
   });
-  const { loading, error, data} = useQuery(QUERY_THOUGHTS);
-
+console.log(data);
   if (loading) {
     // Handle loading state, e.g., display a loading spinner
     return (
@@ -115,54 +114,52 @@ function Blog() {
       </Stack>
     );
   }
-
-  if (error) {
-    // Handle error state, e.g., display an error message
-    return <div>Error: {error.message}</div>;
-  }
-  const { thoughts } = data;
+  const thought = data?.thought || {};
 
   return (
     <>
+      <Navbar />
+     
       <Flex
-        flexDir="row"
+        bg={bgColor}
+        flexDir="column"
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        bg={bgColor}
       >
         <Box bg={bgBoxColor}>
           <Container maxW={'7xl'} py={16} as={Stack} spacing={12} flex="3">
+          <Heading>
+        {thought.thoughtAuthor} had this thought on{' '}
+        <Text as={'span'} color={'orange.400'}>
+          {thought.createdAt}
+        </Text>
+      </Heading>
             <Stack spacing={0} align={'center'}>
-              <Heading>
-                Every developer{' '}
-                <Text as={'span'} color={'orange.400'}>
-                  has a tab open to Thinker
-                </Text>
-              </Heading>
-              <Text margin={3}>List of posts and comments</Text>
-              <DrawerPost/>
+              <Text margin={1}>List of posts and comments</Text>
             </Stack>
             <Stack
               borderRadius={15}
               direction={{ base: 'column', md: 'column' }}
               spacing={{ base: 10, md: 1, lg: 10 }}
             >
-              {thoughts && (
-                <>
-                  {thoughts.map(thought => (
-                    <Post key={thought._id}>
-                      <PostContent>
-                        <PostText>{thought.thoughtText}</PostText>
-                        <AuthorName>Author: {thought.thoughtAuthor}</AuthorName>
-                        <CreatedAt>Created at: {thought.createdAt}</CreatedAt>
+              <>
+                <Post>
+                  <PostContent >
+                    <PostText>{thought.thoughtText}</PostText>
+                    <AuthorName>Author: {thought.thoughtAuthor}</AuthorName>
+                    <CreatedAt>Created at: {thought.createdAt}</CreatedAt>
+                  </PostContent>
+                  {!thought.comments.length ? (
+                                                  <Text fontSize='12px' color='tomato'>No comments yet...</Text>
 
-                        {!thought.comments.length ? (
-                          <Text fontSize='12px' color='tomato'>No comments yet...</Text>
                         ) : (
+                          
                           <div>
+                            <Text margin={3} fontSize='20px' color='black'>Comments...</Text>
                             {thought.comments.map(comment => (
                               <div key={comment._id}>
+                                  
                                 <CommentText>{comment.commentText}</CommentText>
                                 <AuthorName>
                                   Author: {comment.commentAuthor}
@@ -174,22 +171,17 @@ function Blog() {
                             ))}
                           </div>
                         )}
-                         <RouterLink 
-                        fontSize='12px' color='tomato'
-              to={`/thoughts/${thought._id}`}
-            >
-              Jump to comment this thought <ArrowRightIcon margin={2} boxSize={5} />
-            </RouterLink >
-                      </PostContent>
-                    </Post>
-                  ))}
-                </>
-              )}
+                </Post>
+              </>
             </Stack>
+            <CommentForm thoughtId={thought._id}/>
+           
           </Container>
         </Box>
       </Flex>
+      <Footer />
     </>
   );
-}
-export default Blog;
+};
+
+export default SingleThought;

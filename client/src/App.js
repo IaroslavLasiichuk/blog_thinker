@@ -1,7 +1,7 @@
 import About from './Components/About';
 import Contact from './Components/Contact';
 import Profile from './Components/NewPost';
-import Posts from './Components/Posts';
+import SingleThought from './Components/SingleThought';
 import Delete from './Components/Delete';
 import Layout from './Components/Layout';
 import { Route, Routes } from 'react-router-dom';
@@ -42,6 +42,7 @@ function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="delete" element={<Delete/>} />
         <Route path="contact" element={<Contact />} />
+        <Route path="thoughts/:thoughtId" element={<SingleThought />} />
       </Routes>
        </ApolloProvider>
     </>

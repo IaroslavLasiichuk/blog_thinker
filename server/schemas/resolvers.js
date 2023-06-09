@@ -14,6 +14,9 @@ const resolvers = {
     thoughts: async () => {
       return Thought.find().sort({ createdAt: -1 });
     },
+    thought: async (parent, { thoughtId }) => {
+      return Thought.findOne({ _id: thoughtId });
+    },
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate('thoughts');
@@ -70,21 +73,35 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    addComment: async (parent, { thoughtId, commentText }, context) => {
+    addComment: async (parent, { thoughtId, commentText, commentAuthor }, context) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
-          {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
+        try {
+          // Find the thought by ID
+          const thought = await Thought.findById(thoughtId);
+  
+          if (!thought) {
+            throw new Error('Thought not found');
           }
-        );
+  
+          // Create a new comment object
+          const newComment = {
+            commentText,
+            commentAuthor,
+            createdAt: new Date(),
+          };
+  
+          // Add the comment to the thought's comments array
+          thought.comments.push(newComment);
+  
+          // Save the updated thought with the new comment
+          await thought.save();
+  
+          return thought;
+        } catch (error) {
+          throw new Error('Failed to add comment');
+        }
       }
+  
       throw new AuthenticationError('You need to be logged in!');
     },
     updateThought: async (parent, { thoughtId, thoughtText }, context) => {
