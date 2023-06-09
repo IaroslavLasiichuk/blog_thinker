@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Text,
@@ -12,10 +11,8 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { ArrowRightIcon } from '@chakra-ui/icons';
-
 import { useQuery } from '@apollo/client';
 import { QUERY_THOUGHTS } from '../utils/queries';
-
 
 const Post = ({ children }: { children: ReactNode }) => {
   return <Box>{children}</Box>;
@@ -97,14 +94,10 @@ const PostText = ({ children }: { children: ReactNode }) => {
   );
 };
 
-
 function Blog() {
   const bgColor = useColorModeValue('gray.50', 'gray.800');
   const bgBoxColor = useColorModeValue('gray.100', 'gray.700');
-  const [formState, setFormState] = useState({
-    commentText: '',
-  });
-  const { loading, error, data} = useQuery(QUERY_THOUGHTS);
+  const { loading, error, data } = useQuery(QUERY_THOUGHTS);
 
   if (loading) {
     // Handle loading state, e.g., display a loading spinner
@@ -114,7 +107,7 @@ function Blog() {
       </Stack>
     );
   }
-
+  
   if (error) {
     // Handle error state, e.g., display an error message
     return <div>Error: {error.message}</div>;
@@ -156,7 +149,9 @@ function Blog() {
                         <CreatedAt>Created at: {thought.createdAt}</CreatedAt>
 
                         {!thought.comments.length ? (
-                          <Text fontSize='12px' color='tomato'>No comments yet...</Text>
+                          <Text fontSize="12px" color="tomato">
+                            No comments yet...
+                          </Text>
                         ) : (
                           <div>
                             {thought.comments.map(comment => (
@@ -172,12 +167,14 @@ function Blog() {
                             ))}
                           </div>
                         )}
-                         <RouterLink 
-                        fontSize='12px' color='tomato'
-              to={`/thoughts/${thought._id}`}
-            >
-              Jump to comment this thought <ArrowRightIcon margin={2} boxSize={5} />
-            </RouterLink >
+                        <RouterLink
+                          fontSize="12px"
+                          color="tomato"
+                          to={`/thoughts/${thought._id}`}
+                        >
+                          Jump to comment this thought{' '}
+                          <ArrowRightIcon margin={2} boxSize={5} />
+                        </RouterLink>
                       </PostContent>
                     </Post>
                   ))}

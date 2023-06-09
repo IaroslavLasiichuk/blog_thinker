@@ -23,12 +23,6 @@ import { UPDATE_THOUGHT } from '../utils/mutations';
 
 
 const Posts = () => {
-  let [value, setValue] = React.useState('');
-
-  const handleInputChange = e => {
-   const inputValue = e.target.value;
-    setValue(inputValue);
-  };
   const { loading, error, data } = useQuery(QUERY_ME);
   const [thoughtText, setThoughtText] = useState('');
   const [updateThought, { err }] = useMutation(UPDATE_THOUGHT);
@@ -58,7 +52,7 @@ const Posts = () => {
       }));
     } catch (error) {
       // Handle error, e.g., display an error message or handle specific errors
-      console.error('Failed to update thought:', error);
+      console.error('Failed to update thought:', err);
     }
   };
 
@@ -99,7 +93,7 @@ const Posts = () => {
 
   // Destructure the user data from the response
   const { me } = data;
-  // console.log(me);
+  console.log(me);
 
   return (
     <>
@@ -144,10 +138,6 @@ const Posts = () => {
                     <InfoIcon margin={2} w={5} h={5} color="blue.500" />
                     Post created at: {thought.createdAt} by {me.username}
                   </Text>
-                  {/* <Text>
-                    <InfoIcon margin={2} w={5} h={5} color="red.500" />
-                    Post updated at: {thought.updatedAt} 
-                  </Text> */}
                   <Textarea
                     id={thought._id}
                     margin={2}

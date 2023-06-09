@@ -1,3 +1,4 @@
+import React from 'react';
 import About from './Components/About';
 import Contact from './Components/Contact';
 import Profile from './Components/NewPost';
@@ -5,6 +6,7 @@ import SingleThought from './Components/SingleThought';
 import Delete from './Components/Delete';
 import Layout from './Components/Layout';
 import { Route, Routes } from 'react-router-dom';
+import { ThoughtsProvider } from './utils/ThoughtsContext';
 import {
   ApolloClient,
   InMemoryCache,
@@ -36,6 +38,7 @@ function App() {
   return (
     <>
     <ApolloProvider client={client}>
+    <ThoughtsProvider>
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route path="about" element={<About />} />
@@ -44,6 +47,7 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="thoughts/:thoughtId" element={<SingleThought />} />
       </Routes>
+      </ThoughtsProvider>
        </ApolloProvider>
     </>
   );
