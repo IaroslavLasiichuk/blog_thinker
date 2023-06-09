@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Textarea, Button } from '@chakra-ui/react';
+import {
+  Textarea,
+  Button,
+} from '@chakra-ui/react';
 
 import { ADD_COMMENT } from '../utils/mutations';
 
@@ -17,6 +20,7 @@ const CommentForm = ({ thoughtId }) => {
 
     try {
       const { data } = await addComment({
+
         variables: {
           thoughtId,
           commentText,
@@ -40,7 +44,9 @@ const CommentForm = ({ thoughtId }) => {
     <div>
       {Auth.loggedIn() ? (
         <>
-          <form onSubmit={handleFormSubmit}>
+          <form
+            onSubmit={handleFormSubmit}
+          >
             <Textarea
               placeholder="Add your comment..."
               margin={4}
@@ -51,22 +57,19 @@ const CommentForm = ({ thoughtId }) => {
               onChange={handleChange}
             ></Textarea>
             <Button
-              textColor={'black'}
-              fontSize={'14'}
-              display={'flex'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              textAlign={'center'}
-              to={'/contact'}
-              rounded={'full'}
-              px={6}
-              colorScheme={'orange'}
-              bg={'orange.400'}
-              _hover={{ bg: 'orange.500' }}
-              type="submit"
-            >
-              Add Comment
-            </Button>
+             textColor={'black'}
+             fontSize={'14'}
+             display={'flex'}
+             justifyContent={'center'}
+             alignItems={'center'}
+             textAlign={'center'}
+             to={'/contact'}
+             rounded={'full'}
+             px={6}
+             colorScheme={'orange'}
+             bg={'orange.400'}
+             _hover={{ bg: 'orange.500' }}
+              type="submit">Add Comment</Button>
           </form>
         </>
       ) : (

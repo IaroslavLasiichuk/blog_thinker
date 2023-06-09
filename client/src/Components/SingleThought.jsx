@@ -150,7 +150,7 @@ const SingleThought = () => {
                     <AuthorName>Author: {thought.thoughtAuthor}</AuthorName>
                     <CreatedAt>Created at: {thought.createdAt}</CreatedAt>
                   </PostContent>
-                  {!thought.comments.length ? (
+                  {!thought.comments ? (
                                                   <Text fontSize='12px' color='tomato'>No comments yet...</Text>
 
                         ) : (

@@ -68,6 +68,7 @@ export default function Contact() {
           message: "",
         });
       });
+      console.log(response);
   };
 
   return (

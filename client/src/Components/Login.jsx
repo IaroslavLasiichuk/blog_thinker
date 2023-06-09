@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
-
-import {
-    Text,
-  } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 
 import {
   DrawerBody,
@@ -67,11 +64,11 @@ const Login = () => {
                 variant="outline"
                 placeholder="Password"
               />
-               {error ? (
-         <Text fontSize='15px' color='tomato'>
-        The provided credentials are incorrect
-       </Text>
-        ) : null}
+              {error ? (
+                <Text fontSize="15px" color="tomato">
+                  The provided credentials are incorrect
+                </Text>
+              ) : null}
               <Button
                 type="submit"
                 fontSize={'sm'}
