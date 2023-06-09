@@ -16,7 +16,6 @@ import {
 // Import the `useParams()` hook
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-
 import { QUERY_SINGLE_THOUGHT } from '../utils/queries';
 
 const Post = ({ children }: { children: ReactNode }) => {
@@ -105,7 +104,7 @@ const SingleThought = () => {
   const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
     variables: { thoughtId: thoughtId },
   });
-console.log(data);
+
   if (loading) {
     // Handle loading state, e.g., display a loading spinner
     return (
@@ -115,6 +114,7 @@ console.log(data);
     );
   }
   const thought = data?.thought || {};
+  console.log(thought);
 
   return (
     <>

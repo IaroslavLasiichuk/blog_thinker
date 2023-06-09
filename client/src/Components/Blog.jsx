@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import DrawerPost from './DrawerPost';
 import {
   Text,
   Box,
@@ -141,7 +140,6 @@ function Blog() {
                 </Text>
               </Heading>
               <Text margin={3}>List of posts and comments</Text>
-              <DrawerPost/>
             </Stack>
             <Stack
               borderRadius={15}
