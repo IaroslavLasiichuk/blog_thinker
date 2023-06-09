@@ -25,8 +25,8 @@ import { UPDATE_THOUGHT } from '../utils/mutations';
 const Posts = () => {
   let [value, setValue] = React.useState('');
 
-  let handleInputChange = e => {
-    let inputValue = e.target.value;
+  const handleInputChange = e => {
+   const inputValue = e.target.value;
     setValue(inputValue);
   };
   const { loading, error, data } = useQuery(QUERY_ME);
