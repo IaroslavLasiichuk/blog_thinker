@@ -32,7 +32,7 @@ const systemMessage = { //  Explain things like you're talking to a software pro
   }
   
 
-const API_KEY = "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";
+const API_KEY = process.env.REACT_APP_GTP_KEY;
 const AskGtp = () => {
     const { loading, error, data } = useQuery(QUERY_ME);
     const [messages, setMessages] = useState([
