@@ -1,34 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Blog from './Blog';
+import StripeCheckout from 'react-stripe-checkout';
+
 import {
   Flex,
   Container,
   Heading,
   Stack,
   Text,
-  Input,
-  FormControl,
-  FormLabel,
   Button,
   Icon,
+  Select,
   IconProps,
-  useDisclosure,
-} from '@chakra-ui/react';
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
 } from '@chakra-ui/react';
 
 export default function CallToActionWithIllustration() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
+  const PUBLISHABLE_KEY = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
+  const [donationAmount, setDonationAmount] = useState(10); // Default donation amount of $10
 
+  const handleDonationAmountChange = event => {
+    setDonationAmount(Number(event.target.value));
+  };
   return (
     <Flex minHeight="100vh" flexDir="column">
       <Container maxW={'5xl'} flex="1">
@@ -52,51 +44,42 @@ export default function CallToActionWithIllustration() {
             This will be cool header for our application!!!
           </Text>
           <Stack spacing={6} direction={'row'}>
-            <Button
-              textColor={'black'}
-              fontSize={'14'}
-              display={'flex'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              textAlign={'center'}
-              to={'/contact'}
-              rounded={'full'}
-              px={6}
-              colorScheme={'orange'}
-              bg={'orange.400'}
-              _hover={{ bg: 'orange.500' }}
-              onClick={onOpen}
+            <Select
+              value={donationAmount}
+              onChange={handleDonationAmountChange}
+              maxWidth="150px"
             >
-              Donate
-            </Button>
-            <Modal
-              initialFocusRef={initialRef}
-              finalFocusRef={finalRef}
-              isOpen={isOpen}
-              onClose={onClose}
+              <option value={10}>$10</option>
+              <option value={20}>$20</option>
+              <option value={50}>$50</option>
+              <option value={100}>$100</option>
+            </Select>
+            <StripeCheckout
+              name="Donate to Thinker" // the pop-in header title
+              description="Thanks for donation"
+              amount={donationAmount * 100} // cents
+              currency="USD"
+              token={token => {
+                console.log(token);
+              }}
+              stripeKey={PUBLISHABLE_KEY}
             >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Create your account</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={6}>
-                  <FormControl>
-                    <FormLabel>First name</FormLabel>
-                    <Input ref={initialRef} placeholder="First name" />
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Last name</FormLabel>
-                    <Input placeholder="Last name" />
-                  </FormControl>
-                </ModalBody>
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3}>
-                    Save
-                  </Button>
-                  <Button onClick={onClose}>Cancel</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
+              <Button
+                textColor={'black'}
+                fontSize={'14'}
+                display={'flex'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                textAlign={'center'}
+                rounded={'full'}
+                px={6}
+                colorScheme={'orange'}
+                bg={'orange.400'}
+                _hover={{ bg: 'orange.500' }}
+              >
+                Donate
+              </Button>
+            </StripeCheckout>
           </Stack>
           <Flex w={'full'}>
             <Illustration
@@ -104,9 +87,8 @@ export default function CallToActionWithIllustration() {
               mt={{ base: 12, sm: 16 }}
             />
           </Flex>
-          <Blog/>
+          <Blog />
         </Stack>
-      
       </Container>
     </Flex>
   );
