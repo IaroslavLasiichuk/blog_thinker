@@ -1,7 +1,8 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Thought } = require('../models');
+require("dotenv").config();
 const { signToken } = require('../utils/auth');
-// const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const resolvers = {
   Query: {
@@ -23,6 +24,7 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+   
   },
 
   Mutation: {
@@ -115,12 +117,6 @@ const resolvers = {
       if (!thought) {
         throw new Error('Thought not found');
       }
-    
-      // Verify if the authenticated user is the author of the thought
-      // if (thought.thoughtAuthor !== context.user.username) {
-      //   throw new AuthorizationError('You are not authorized to update this thought');
-      // }
-    
       // Update the thoughtText field
       thought.thoughtText = thoughtText;
     
@@ -164,7 +160,9 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-  }
+    
+  },
+  
 };
 
 module.exports = resolvers;

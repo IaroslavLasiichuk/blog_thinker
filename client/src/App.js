@@ -4,6 +4,7 @@ import Contact from './Components/Contact';
 import Profile from './Components/NewPost';
 import SingleThought from './Components/SingleThought';
 import Delete from './Components/Delete';
+import NotFound from './Pages/NotFound';
 import Layout from './Components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { ThoughtsProvider } from './utils/ThoughtsContext';
@@ -46,6 +47,7 @@ function App() {
         <Route path="delete" element={<Delete/>} />
         <Route path="contact" element={<Contact />} />
         <Route path="thoughts/:thoughtId" element={<SingleThought />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       </ThoughtsProvider>
        </ApolloProvider>

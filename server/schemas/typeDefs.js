@@ -1,4 +1,5 @@
 const { gql } = require('apollo-server-express');
+const { GraphQLScalarType } = require('graphql');
 
 const typeDefs = gql`
   type User {
@@ -8,6 +9,7 @@ const typeDefs = gql`
     password: String
     thoughts: [Thought]!
   }
+
   type Thought {
     _id: ID
     thoughtText: String
@@ -37,9 +39,10 @@ const typeDefs = gql`
     me: User
   }
 
-  type Auth {
-    token: ID!
-    user: User
+  scalar Amount
+
+  type DonationResult {
+    clientSecret: String!
   }
 
   type Mutation {
@@ -50,6 +53,7 @@ const typeDefs = gql`
     updateThought(thoughtId: ID!, thoughtText: String!): Thought!
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
+    donate(amount: Amount!): DonationResult!
   }
 `;
 
