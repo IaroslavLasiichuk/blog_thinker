@@ -4,6 +4,7 @@ import Contact from './Components/Contact';
 import Profile from './Components/NewPost';
 import SingleThought from './Components/SingleThought';
 import Delete from './Components/Delete';
+import AskGtp from './Pages/AskGtp';
 import NotFound from './Pages/NotFound';
 import Layout from './Components/Layout';
 import { Route, Routes } from 'react-router-dom';
@@ -46,6 +47,8 @@ function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="delete" element={<Delete/>} />
         <Route path="contact" element={<Contact />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="askgtp" element={<AskGtp />} />
         <Route path="thoughts/:thoughtId" element={<SingleThought />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -10,6 +10,7 @@ export const QUERY_USER = gql`
   }
 `;
 
+
 export const QUERY_THOUGHTS = gql`
   query getThoughts {
     thoughts {
@@ -26,6 +27,7 @@ export const QUERY_THOUGHTS = gql`
     }
   }
 `;
+
 
 export const QUERY_SINGLE_THOUGHT = gql`
   query getSingleThought($thoughtId: ID!) {
