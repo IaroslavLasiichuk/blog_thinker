@@ -322,11 +322,12 @@ const NAV_ITEMS: Array<NavItem> = [
     href: '/contact',
   },
   {
-    label: 'About',
-    href: '/about',
-  },
-  {
     label: 'Ask Gtp',
     href: '/askgtp',
   },
+  {
+    label: 'About',
+    href: '/about',
+  },
+
 ];

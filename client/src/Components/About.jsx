@@ -109,7 +109,7 @@ export default function About() {
           <Container maxW={'7xl'} py={16} as={Stack} spacing={12} flex="1">
             <Stack spacing={0} align={'center'}>
               <Heading>About Us</Heading>
-              <Text>Here will be some cool headindg</Text>
+              <Text>Hey there, thanks for visiting our site! You’re probably wondering who we are and what we do –  settle in, we’re about to tell you everything.</Text>
             </Stack>
             <Stack
               direction={{ base: 'column', md: 'row' }}
