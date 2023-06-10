@@ -1,6 +1,7 @@
 # Blog Thinker
 
 ## Description 
+Thinker is a community-driven question and answer platform designed to connect people seeking knowledge with those who have expertise in various fields. Whether you're a beginner or an experienced professional, Thinker provides a platform where you can ask questions, share insights, and engage in discussions with a diverse community of experts and enthusiasts.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -16,7 +17,7 @@ Link to deployed application on HEROKU.
 
   * [Screenshot](#screenshot)
   
-  * [Front-End and Back-end Specifications](#back-end-specifications)
+  * [Project Requirements](#project-requirements)
   
   * [Contributing](#contributing)
   
@@ -36,17 +37,35 @@ Link to deployed application on HEROKU.
 
 
 ## Technologies
-The following technologies and tools were used in the development of this book search engine:
+The following technologies and tools were used in the development:
 
 1. React.js
 2. Node.js
 3. Express.js
 4. MongoDB
 5. Apollo Server
+6. MongoDb
+7. Chakra UI
+8. Nodemailer
+9. Javascript
+10. HTML
+11. CSS
 
 
 ## Screenshot
-![Screenshot](screenshot)
+![Screenshot](./Assets/salty-eyrie-98942.herokuapp.com_.png)
+
+## Project Requirements
+ * Use React for the front end.
+ * Use GraphQL with a Node.js and Express.js server.
+ * Use queries and mutations for retrieving, adding, updating, and deleting data.
+ * Be deployed using Heroku (with data).
+ * Have a polished UI.
+ * Be responsive.
+ * Include authentication (JWT).
+ * Protect sensitive API key information on the server.
+ * Have a clean repository that meets quality coding standards (file structure, naming conventions, best practices for class and id naming conventions, indentation, high-quality comments, and so on).
+ * Have a high-quality README (with unique name, description, technologies used, screenshot, and link to deployed application).
 
 ## Contributing
 

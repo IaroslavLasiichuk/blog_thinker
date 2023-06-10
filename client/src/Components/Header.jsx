@@ -41,7 +41,7 @@ export default function CallToActionWithIllustration() {
             </Text>
           </Heading>
           <Text color={'gray.500'} maxW={'3xl'}>
-            This will be cool header for our application!!!
+          Empowering the world to develop technology through collective knowledge.
           </Text>
           <Stack spacing={6} direction={'row'}>
             <Select

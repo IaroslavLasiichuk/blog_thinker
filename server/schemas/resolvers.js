@@ -24,10 +24,42 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-   
+    // createCheckoutSession: async (parent, args, context)=> {
+    //   const url = new URL(context.headers.referer).origin;
+      // const session = await stripe.checkout.session.create( {
+      //   line_item:[
+      //     {
+      //       price: 'price_1NHW2PIR6WFhZtkiXbTW3iOL',
+      //       quantity: 1
+      //     }
+      //   ],
+      //   mode: 'payment',
+      //   success_url: `${url}/success`,
+      //   cancel_url: `${url}/cancel`
+      // });
+      // return JSON.stringify({
+      //   url: session.url
+      // });
+  //     const session = await stripe.checkout.sessions.create({
+  //       payment_method_types: ['card'],
+  //       line_items:[
+  //             {
+  //               price: 'price_1NHW2PIR6WFhZtkiXbTW3iOL',
+  //               quantity: 1
+  //             }
+  //           ],
+  //       mode: 'payment',
+  //       success_url: `${url}/success}`,
+  //       cancel_url: `${url}/`
+  //     });
+
+  //     return { session: session.id };
+  //   }
+    
   },
 
   Mutation: {
+    
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
@@ -161,8 +193,7 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     
-  },
-  
+  }
 };
 
 module.exports = resolvers;
