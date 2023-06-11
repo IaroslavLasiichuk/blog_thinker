@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import StripeCheckout from 'react-stripe-checkout';
+import React from 'react';
+import Donate from './Donate';
 
 import {
   Flex,
@@ -7,19 +7,12 @@ import {
   Heading,
   Stack,
   Text,
-  Button,
   Icon,
-  Select,
   IconProps,
 } from '@chakra-ui/react';
 
 export default function CallToActionWithIllustration() {
-  const PUBLISHABLE_KEY = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
-  const [donationAmount, setDonationAmount] = useState(10); // Default donation amount of $10
-
-  const handleDonationAmountChange = event => {
-    setDonationAmount(Number(event.target.value));
-  };
+  
   return (
     <Flex minHeight="100vh" flexDir="column">
       <Container maxW={'5xl'} flex="1">
@@ -43,47 +36,12 @@ export default function CallToActionWithIllustration() {
           Empowering the world to develop technology through collective knowledge.
           </Text>
           <Stack spacing={6} direction={'row'}>
-            <Select
-              value={donationAmount}
-              onChange={handleDonationAmountChange}
-              maxWidth="150px"
-            >
-              <option value={10}>$10</option>
-              <option value={20}>$20</option>
-              <option value={50}>$50</option>
-              <option value={100}>$100</option>
-            </Select>
-            <StripeCheckout
-              name="Donate to Thinker" // the pop-in header title
-              description="Thanks for donation"
-              amount={donationAmount * 100} // cents
-              currency="USD"
-              token={token => {
-                console.log(token);
-              }}
-              stripeKey={PUBLISHABLE_KEY}
-            >
-              <Button
-                textColor={'black'}
-                fontSize={'14'}
-                display={'flex'}
-                justifyContent={'center'}
-                alignItems={'center'}
-                textAlign={'center'}
-                rounded={'full'}
-                px={6}
-                colorScheme={'orange'}
-                bg={'orange.400'}
-                _hover={{ bg: 'orange.500' }}
-              >
-                Donate
-              </Button>
-            </StripeCheckout>
+            <Donate/>
           </Stack>
           <Flex w={'full'}>
             <Illustration
-              height={{ sm: '24rem', lg: '28rem' }}
-              mt={{ base: 12, sm: 16 }}
+              height={{ sm: '26rem', lg: '28rem' }}
+              mt={{ base: 20, sm: 16 }}
             />
           </Flex>
         </Stack>
