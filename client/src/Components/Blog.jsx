@@ -88,9 +88,9 @@ const CreatedAt = ({ children }: { children: ReactNode }) => {
 
 const PostText = ({ children }: { children: ReactNode }) => {
   return (
-    <Heading as={'h3'} fontSize={'xl'}>
+    <Text fontSize={'xl'}>
       {children}
-    </Heading>
+    </Text>
   );
 };
 
@@ -128,9 +128,9 @@ function Blog() {
             <Stack spacing={0} align={'center'}>
               <Heading align={'center'}>
                 Every developer{' '}
-                <Text as={'span'} color={'orange.400'}>
+                {/* <Text as={'span'} color={'orange.400'}> */}
                   has a tab open to Thinker
-                </Text>
+                {/* </Text> */}
               </Heading>
               <Text margin={3}>List of posts and comments</Text>
             </Stack>
@@ -149,7 +149,7 @@ function Blog() {
                         <CreatedAt>Created at: {thought.createdAt}</CreatedAt>
 
                         {!thought.comments.length ? (
-                          <Text fontSize="12px" color="tomato">
+                          <Text fontSize="12px" color="red">
                             No comments yet...
                           </Text>
                         ) : (
