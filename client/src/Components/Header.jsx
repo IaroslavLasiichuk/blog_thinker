@@ -11,10 +11,10 @@ import {
   IconProps,
 } from '@chakra-ui/react';
 
-export default function CallToActionWithIllustration() {
+export default function Header() {
   
   return (
-    <Flex minHeight="100vh" flexDir="column">
+    <Flex flexDir="column">
       <Container maxW={'5xl'} flex="1">
         <Stack
           textAlign={'center'}

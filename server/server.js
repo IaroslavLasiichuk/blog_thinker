@@ -77,7 +77,7 @@ app.post('/send', async (req, res) => {
 });
 
 // Stripe
-const YOUR_DOMAIN = 'http://localhost:3000';
+const DOMAIN = 'https://salty-eyrie-98942.herokuapp.com';
 
 app.post('/create-checkout-session', async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -89,8 +89,8 @@ app.post('/create-checkout-session', async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: `${YOUR_DOMAIN}/success`,
-    cancel_url: `${YOUR_DOMAIN}/`,
+    success_url: `${DOMAIN}/success`,
+    cancel_url: `${DOMAIN}/`,
   });
 
   res.redirect(303, session.url);
