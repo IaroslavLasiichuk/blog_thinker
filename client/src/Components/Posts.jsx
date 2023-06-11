@@ -83,7 +83,7 @@ const Posts = () => {
               to create a post
             </Text>
           </Heading>
-          <Link as={RouterLink} fontSize={'lg'} fontWeight={900} to="/">
+          <Link as={RouterLink} margin={3} fontSize={'lg'} fontWeight={900} to="/">
             GO HOME
           </Link>
         </Box>

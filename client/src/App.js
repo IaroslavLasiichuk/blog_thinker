@@ -7,6 +7,7 @@ import Chat from './Pages/Chat';
 import Contact from './Pages/Contact';
 import About from './Pages/About';
 import NotFound from './Pages/NotFound';
+import Success from './Components/Success';
 
 import { Route, Routes } from 'react-router-dom';
 import { ThoughtsProvider } from './utils/ThoughtsContext';
@@ -50,6 +51,7 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="chat" element={<Chat />} />
         <Route path="about" element={<About />} />
+        <Route path="success" element={<Success />} />
         <Route path="thoughts/:thoughtId" element={<Thought />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

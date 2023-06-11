@@ -113,11 +113,11 @@ export default function Form() {
                 <Button 
                  type="submit"
                  onSubmit={submitEmail}
-                colorScheme={'blue'}
+                 margin={4}
+                 colorScheme={'blue'}
                  variant={'solid'}>
                   Send
                 </Button>
-               
               </Stack>
               </form>
             </Stack>
