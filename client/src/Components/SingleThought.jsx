@@ -112,7 +112,6 @@ const SingleThought = () => {
     );
   }
   const thought = data?.thought || {};
-  console.log(thought);
 
   return (
     <>
@@ -146,8 +145,8 @@ const SingleThought = () => {
                     <AuthorName>Author: {thought.thoughtAuthor}</AuthorName>
                     <CreatedAt>Created at: {thought.createdAt}</CreatedAt>
                   </PostContent>
-                  {!thought.comments ? (
-                    <Text fontSize="12px" color="tomato">
+                  {!thought.comments.length ? (
+                    <Text fontSize="12px" color="red">
                       No comments yet...
                     </Text>
                   ) : (
