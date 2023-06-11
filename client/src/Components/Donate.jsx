@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@chakra-ui/react';
+
 const Donate = () => (
   <>
-    <form action="/create-checkout-session" method="POST">
+    <form action="/create-checkout-session"
+     method="POST"
+     >
       <Button
         type="submit"
         textColor={'black'}
