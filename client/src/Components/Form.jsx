@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import {
   Button,
   Flex,
@@ -14,7 +12,7 @@ import {
   useToast
 } from '@chakra-ui/react';
 
-export default function Contact() {
+export default function Form() {
   const toast = useToast();
   const [mailerState, setMailerState] = useState({
     name: "",
@@ -74,7 +72,6 @@ export default function Contact() {
   return (
     <>
       <Flex minHeight="100vh" flexDir="column">
-        <Navbar />
         <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
           <Flex p={8} flex={1} align={'center'} justify={'center'}>
             <Stack spacing={4} w={'full'} maxW={'md'}>
@@ -135,7 +132,6 @@ export default function Contact() {
             />
           </Flex>
         </Stack>
-        <Footer />
       </Flex>
     </>
   );

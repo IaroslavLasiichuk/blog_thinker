@@ -1,9 +1,7 @@
 import React from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import CommentForm from './CommentForm';
 import {
- Spinner,
+  Spinner,
   Box,
   Flex,
   Heading,
@@ -40,7 +38,7 @@ const PostContent = ({ children }: { children: ReactNode }) => {
 const AuthorName = ({ children }: { children: ReactNode }) => {
   return (
     <Text
-    textalign={'center'}
+      textalign={'center'}
       color={useColorModeValue('gray.600', 'gray.400')}
       fontSize={'sm'}
     >
@@ -118,8 +116,6 @@ const SingleThought = () => {
 
   return (
     <>
-      <Navbar />
-     
       <Flex
         bg={bgColor}
         flexDir="column"
@@ -129,12 +125,12 @@ const SingleThought = () => {
       >
         <Box bg={bgBoxColor}>
           <Container maxW={'7xl'} py={16} as={Stack} spacing={12} flex="3">
-          <Heading>
-        {thought.thoughtAuthor} had this thought on{' '}
-        <Text as={'span'} color={'orange.400'}>
-          {thought.createdAt}
-        </Text>
-      </Heading>
+            <Heading>
+              {thought.thoughtAuthor} had this thought on{' '}
+              <Text as={'span'} color={'orange.400'}>
+                {thought.createdAt}
+              </Text>
+            </Heading>
             <Stack spacing={0} align={'center'}>
               <Text margin={1}>List of posts and comments</Text>
             </Stack>
@@ -145,41 +141,38 @@ const SingleThought = () => {
             >
               <>
                 <Post>
-                  <PostContent >
+                  <PostContent>
                     <PostText>{thought.thoughtText}</PostText>
                     <AuthorName>Author: {thought.thoughtAuthor}</AuthorName>
                     <CreatedAt>Created at: {thought.createdAt}</CreatedAt>
                   </PostContent>
                   {!thought.comments ? (
-                                                  <Text fontSize='12px' color='tomato'>No comments yet...</Text>
-
-                        ) : (
-                          
-                          <div>
-                            <Text margin={3} fontSize='20px' color='black'>Comments...</Text>
-                            {thought.comments.map(comment => (
-                              <div key={comment._id}>
-                                  
-                                <CommentText>{comment.commentText}</CommentText>
-                                <AuthorName>
-                                  Author: {comment.commentAuthor}
-                                </AuthorName>
-                                <CreatedAt>
-                                  Created at: {comment.createdAt}
-                                </CreatedAt>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                    <Text fontSize="12px" color="tomato">
+                      No comments yet...
+                    </Text>
+                  ) : (
+                    <div>
+                      <Text margin={3} fontSize="20px" color="black">
+                        Comments...
+                      </Text>
+                      {thought.comments.map(comment => (
+                        <div key={comment._id}>
+                          <CommentText>{comment.commentText}</CommentText>
+                          <AuthorName>
+                            Author: {comment.commentAuthor}
+                          </AuthorName>
+                          <CreatedAt>Created at: {comment.createdAt}</CreatedAt>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </Post>
               </>
             </Stack>
-            <CommentForm thoughtId={thought._id}/>
-           
+            <CommentForm thoughtId={thought._id} />
           </Container>
         </Box>
       </Flex>
-      <Footer />
     </>
   );
 };

@@ -1,14 +1,16 @@
 import React from 'react';
-import About from './Components/About';
-import Contact from './Components/Contact';
-import Profile from './Components/NewPost';
-import SingleThought from './Components/SingleThought';
-import Delete from './Components/Delete';
-import AskGtp from './Pages/AskGtp';
+import Home from './Pages/Home';
+import CreatePost from './Pages/CreatePost';
+import DeletePost from './Pages/DeletePost';
+import Thought from './Pages/Thought';
+import Chat from './Pages/Chat';
+import Contact from './Pages/Contact';
+import About from './Pages/About';
 import NotFound from './Pages/NotFound';
-import Layout from './Components/Layout';
+
 import { Route, Routes } from 'react-router-dom';
 import { ThoughtsProvider } from './utils/ThoughtsContext';
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -42,14 +44,13 @@ function App() {
     <ApolloProvider client={client}>
     <ThoughtsProvider>
       <Routes>
-        <Route path="/" element={<Layout />} />
+        <Route path="/" element={<Home />} />
+        <Route path="profile" element={<CreatePost />} />
+        <Route path="delete" element={<DeletePost/>} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="chat" element={<Chat />} />
         <Route path="about" element={<About />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="delete" element={<Delete/>} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="askgtp" element={<AskGtp />} />
-        <Route path="thoughts/:thoughtId" element={<SingleThought />} />
+        <Route path="thoughts/:thoughtId" element={<Thought />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </ThoughtsProvider>

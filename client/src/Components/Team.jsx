@@ -1,6 +1,4 @@
 import { ReactNode } from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import {
   Box,
   Flex,
@@ -94,10 +92,9 @@ const TestimonialAvatar = ({
   );
 };
 
-export default function About() {
+export default function Team() {
   return (
     <>
-      <Navbar />
       <Flex
         flexDir="column"
         minH={'100vh'}
@@ -106,7 +103,7 @@ export default function About() {
         bg={useColorModeValue('gray.50', 'gray.800')}
       >
         <Box bg={useColorModeValue('gray.100', 'gray.700')}>
-          <Container maxW={'7xl'} py={16} as={Stack} spacing={12} flex="1">
+          <Container maxW={'7xl'} py={28} as={Stack} spacing={12} flex="1">
             <Stack spacing={0} align={'center'}>
               <Heading>About Us</Heading>
               <Text>Hey there, thanks for visiting our site! You’re probably wondering who we are and what we do –  settle in, we’re about to tell you everything.</Text>
@@ -178,7 +175,6 @@ export default function About() {
           </Container>
         </Box>
       </Flex>
-      <Footer />
     </>
   );
 }
