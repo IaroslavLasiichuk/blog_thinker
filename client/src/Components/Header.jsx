@@ -32,7 +32,7 @@ export default function Header() {
               Thinker
             </Text>
           </Heading>
-          <Text color={'gray.500'} maxW={'3xl'}>
+          <Text color={'black.500'} maxW={'3xl'}>
           Empowering the world to develop technology through collective knowledge.
           </Text>
           <Stack spacing={6} direction={'row'}>

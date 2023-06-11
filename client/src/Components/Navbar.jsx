@@ -99,10 +99,8 @@ export default function WithSubnavigation() {
                 <Button onClick={drawerLogin.onOpen}>Login</Button>
                  <Button
             onClick={drawer.onOpen}
-            as={'a'}
             fontSize={'sm'}
             fontWeight={600}
-            color={'white'}
             bg={'pink.400'}
             _hover={{
               bg: 'pink.300',
@@ -116,7 +114,7 @@ export default function WithSubnavigation() {
             <DrawerOverlay />
             <Signup />
           </Drawer>
-          <Button onClick={toggleColorMode}>
+          <Button aria-label="switch dark mode" onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
         </Stack>

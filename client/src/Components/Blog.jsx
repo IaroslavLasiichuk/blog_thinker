@@ -88,9 +88,9 @@ const CreatedAt = ({ children }: { children: ReactNode }) => {
 
 const PostText = ({ children }: { children: ReactNode }) => {
   return (
-    <Heading as={'h3'} fontSize={'xl'}>
+    <Text fontSize={'xl'}>
       {children}
-    </Heading>
+    </Text>
   );
 };
 
