@@ -126,7 +126,7 @@ const AskGtp = () => {
     return (
       <div>
         Error: {error.message}
-        <Box textAlign="center" py={10} px={6}>
+        <Box minHeight="100vh" flexDir="column" textAlign="center" py={10} px={6}>
           <WarningTwoIcon boxSize={'50px'} color={'orange.300'} />
           <Heading
             textAlign={'center'}
