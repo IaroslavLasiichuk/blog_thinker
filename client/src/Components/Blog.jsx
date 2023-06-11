@@ -126,7 +126,7 @@ function Blog() {
         <Box bg={bgBoxColor}>
           <Container maxW={'7xl'} py={16} as={Stack} spacing={12} flex="3">
             <Stack spacing={0} align={'center'}>
-              <Heading>
+              <Heading align={'center'}>
                 Every developer{' '}
                 <Text as={'span'} color={'orange.400'}>
                   has a tab open to Thinker
