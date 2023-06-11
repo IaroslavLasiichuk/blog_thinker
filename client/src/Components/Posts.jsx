@@ -114,10 +114,16 @@ const Posts = () => {
             {me.username}
           </Text>{' '}
           to your profile
-        </Heading>
-        <Heading as="h3" size="lg">
-          List of your posts
-        </Heading>
+         </Heading>
+            {!me.thoughts.length ? (
+              <Heading as="h3" size="lg">
+                No posts
+              </Heading>
+            ) : (
+              <Heading as="h3" size="lg">
+                List of your posts
+              </Heading>
+            )}
         <DrawerPost />
         {me && (
           <>

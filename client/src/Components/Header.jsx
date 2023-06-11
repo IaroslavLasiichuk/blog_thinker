@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Blog from './Blog';
 import StripeCheckout from 'react-stripe-checkout';
 
 import {
@@ -87,7 +86,6 @@ export default function CallToActionWithIllustration() {
               mt={{ base: 12, sm: 16 }}
             />
           </Flex>
-          <Blog />
         </Stack>
       </Container>
     </Flex>

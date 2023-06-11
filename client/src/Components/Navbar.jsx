@@ -323,7 +323,7 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: 'Ask Gtp',
-    href: '/askgtp',
+    href: '/chat',
   },
   {
     label: 'About',

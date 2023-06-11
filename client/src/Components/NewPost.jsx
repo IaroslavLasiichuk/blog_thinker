@@ -1,6 +1,4 @@
 import React from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import Posts from './Posts';
 
 import {
@@ -8,16 +6,14 @@ import {
   Container,
 } from '@chakra-ui/react';
 
-export default function Profile() {
+export default function NewPost() {
  
   return (
     <>
     <Flex minHeight="100vh" flexDir="column">
-      <Navbar />
       <Container maxW={'5xl'}  flex="1">
         <Posts/>
       </Container>
-      <Footer/>
       </Flex>
     </>
   );

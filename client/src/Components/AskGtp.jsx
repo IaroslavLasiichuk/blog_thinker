@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
 import {
     Flex,
     Container,
@@ -31,7 +29,6 @@ const systemMessage = { //  Explain things like you're talking to a software pro
     "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
   }
   
-
 const API_KEY = process.env.REACT_APP_GTP_KEY;
 const AskGtp = () => {
     const { loading, error, data } = useQuery(QUERY_ME);
@@ -150,7 +147,6 @@ const AskGtp = () => {
 
   return (
     <Flex minHeight="100vh" flexDir="column">
-      <Navbar />
       <Container maxW={'5xl'}  flex="1">
       <Stack
           textAlign={'center'}
@@ -185,7 +181,6 @@ const AskGtp = () => {
         </ChatContainer>
       </MainContainer>
       </Container>
-      <Footer/>
       </Flex>
   );
 };
