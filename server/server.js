@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const compression = require('compression');
 require("dotenv").config();
 const { authMiddleware } = require('./utils/auth');
 const { Form } = require('./models');
@@ -33,6 +34,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+app.use(compression());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
