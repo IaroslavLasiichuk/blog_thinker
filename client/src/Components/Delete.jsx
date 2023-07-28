@@ -28,7 +28,6 @@ const Posts = () => {
   const { loading, error, data, refetch } = useQuery(QUERY_ME);
   const [removeThought, { error: deleteError }] = useMutation(REMOVE_THOUGTH, {
     onCompleted: (thoughtId) => {
-      
       refetch();
       toast({
         title: 'Post deleted',

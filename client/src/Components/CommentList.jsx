@@ -84,8 +84,6 @@ const CommentList = () => {
       console.log(thoughts);
     return (
         <>
-<h1>sfgs</h1>
-      
       </>
        );
 }
