@@ -49,6 +49,7 @@ export default function WithSubnavigation() {
         align={'center'}
       >
           {Auth.loggedIn() && (
+            
                       <Flex
                       flex={{ base: 1, md: 'auto' }}
                       ml={{ base: -2 }}
@@ -123,6 +124,7 @@ export default function WithSubnavigation() {
         <MobileNav />
       </Collapse>
     </Box>
+    
   );
 }
 
@@ -133,9 +135,10 @@ const DesktopNav = () => {
 
   return (
     <Stack direction={'row'} spacing={4}>
-      {NAV_ITEMS.map(navItem => {
-        if (!Auth.loggedIn()) {
-          return null;
+    {NAV_ITEMS.map((navItem) => {
+        // Check if the user is not logged in and the item is 'Profile'
+        if (!Auth.loggedIn() && navItem.label === 'Profile') {
+          return null; // Skip rendering the 'Profile' item when user is not logged in
         }
 
         return (
@@ -320,7 +323,7 @@ const NAV_ITEMS: Array<NavItem> = [
     href: '/contact',
   },
   {
-    label: 'Ask Gtp',
+    label: 'Ask Thinker',
     href: '/chat',
   },
   {
