@@ -48,7 +48,7 @@ export default function WithSubnavigation() {
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
       >
-          {Auth.loggedIn() && (
+       
             
                       <Flex
                       flex={{ base: 1, md: 'auto' }}
@@ -64,7 +64,7 @@ export default function WithSubnavigation() {
                         aria-label={'Toggle Navigation'}
                       />
                     </Flex>
-                    )}
+                    
        
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* Logo link */}
@@ -231,9 +231,9 @@ const MobileNav = () => {
       display={{ md: 'none' }}
     >
       {NAV_ITEMS.map(navItem => {
-        if (!Auth.loggedIn()) {
-          return null; // Skip rendering the MobileNavItem if it should only be shown when logged in and the user is not logged in
-        }
+        // if (Auth.loggedIn()) {
+        //   return null; // Skip rendering the MobileNavItem if it should only be shown when logged in and the user is not logged in
+        // }
 
         return <MobileNavItem key={navItem.label} {...navItem} />;
       })}
