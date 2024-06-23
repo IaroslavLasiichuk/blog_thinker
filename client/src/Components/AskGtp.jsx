@@ -33,6 +33,7 @@ const systemMessage = {
 };
 
 const API_KEY = process.env.REACT_APP_GTP_KEY;
+console.log(API_KEY);
 const AskGtp = () => {
   const { loading, error, data } = useQuery(QUERY_ME);
   const [messages, setMessages] = useState([
