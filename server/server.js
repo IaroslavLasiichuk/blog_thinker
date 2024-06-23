@@ -7,7 +7,6 @@ require("dotenv").config();
 const { authMiddleware } = require('./utils/auth');
 const { Form } = require('./models');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 // Import the ApolloServer class
 const { typeDefs, resolvers } = require("./schemas");
 const { ApolloServer } = require("apollo-server-express");
@@ -79,7 +78,7 @@ app.post('/send', async (req, res) => {
 });
 
 // Stripe
-const DOMAIN = 'https://salty-eyrie-98942.herokuapp.com';
+const DOMAIN = 'https://thinker.lamur.us';
 
 app.post('/create-checkout-session', async (req, res) => {
   const session = await stripe.checkout.sessions.create({

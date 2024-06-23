@@ -322,10 +322,10 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Contact',
     href: '/contact',
   },
-  {
-    label: 'Ask Thinker',
-    href: '/chat',
-  },
+  // {
+  //   label: 'Ask Thinker',
+  //   href: '/chat',
+  // },
   {
     label: 'About',
     href: '/about',
